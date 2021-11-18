@@ -23,4 +23,5 @@
   config.files.license.spdx.vars."copyright holders" = "Cruel Intentions";
 
   config.gh-actions.ci-cd.enable = true;
+  config.gh-actions.ci-cd.build = "menu";
 }

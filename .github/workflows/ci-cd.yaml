@@ -8,18 +8,8 @@ jobs:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           nix_path: channel:nixos-unstable
-      - name: Pre Build
-        run: nix develop --command gh-actions-ci-cd-pre-build
       - name: Build
         run: nix develop --command gh-actions-ci-cd-build
-      - name: Test
-        run: nix develop --command gh-actions-ci-cd-test
-      - name: Deploy
-        run: nix develop --command gh-actions-ci-cd-deploy
-      - name: Deploy
-        run: nix develop --command gh-actions-ci-cd-deploy
-      - name: Pos eploy
-        run: nix develop --command gh-actions-ci-cd-post-deploy
 "on":
   push:
     branches:
