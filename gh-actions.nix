@@ -1,12 +1,12 @@
 { lib, config, ... }:
 let
   cfg = config.gh-actions.ci-cd;
-  cmd = step: "nix develop --command gh-actions-ci-${step}";
+  cmd = step: "nix develop --command gh-actions-ci-cd-${step}";
 in
 { 
   imports = [ ./gh-actions-options.nix ];
   config.files.alias = lib.mkIf cfg.enable {
-    gh-actions-ci-pre-build = cfg.pre-build;
+    gh-actions-ci-cd-pre-build = cfg.pre-build;
     gh-actions-ci-cd-build = cfg.build;
     gh-actions-ci-cd-test = cfg.test;
     gh-actions-ci-cd-deploy = cfg.deploy;
