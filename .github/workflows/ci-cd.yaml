@@ -9,7 +9,7 @@ jobs:
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           nix_path: channel:nixos-unstable
       - run: nix develop
-      - run: echo pre-building
+      - run: menu
       - run: echo building
       - run: echo testing
       - run: echo deploying

@@ -5,7 +5,7 @@
       options.enable = lib.mkEnableOption "Github Actions CI-CD";
       options.pre-build = lib.mkOption {
         type = lib.types.str;
-        default = "echo pre-building";
+        default = "menu";
         example = "npm i";
         description = "Command to run before build";
       };
