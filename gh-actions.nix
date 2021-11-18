@@ -12,7 +12,7 @@ in
     gh-actions-ci-cd-deploy = cfg.deploy;
   };
   config.files.yaml."/.github/workflows/ci-cd.yaml" = lib.mkIf cfg.enable {
-    on = "push";
+    on = cfg.on;
     jobs.ci-cd.runs-on = "ubuntu-latest";
     jobs.ci-cd.steps = [
       { uses = "actions/checkout@v2.4.0"; }

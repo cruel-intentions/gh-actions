@@ -3,6 +3,12 @@
   options.gh-actions.ci-cd = lib.mkOption {
     type = lib.types.submodule {
       options.enable = lib.mkEnableOption "Github Actions CI-CD";
+      options.on = lib.mkOption {
+        type = lib.types.attrsOf lib.types.anything;
+        default.push.branches = ["master"];
+        example = "npm i";
+        description = "When this build should be triggered";
+      };
       options.pre-build = lib.mkOption {
         type = lib.types.str;
         default = "menu";
