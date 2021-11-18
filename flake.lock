@@ -1,0 +1,92 @@
+{
+  "nodes": {
+    "devshell": {
+      "locked": {
+        "lastModified": 1636119665,
+        "narHash": "sha256-e11Z9PyH9hdgTm4Vyl8S5iTwrv0um6+srzb1Ba+YUHA=",
+        "owner": "numtide",
+        "repo": "devshell",
+        "rev": "ab14b1a3cb253f58e02f5f849d621292fbf81fad",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "devshell",
+        "type": "github"
+      }
+    },
+    "dsf": {
+      "inputs": {
+        "devshell": "devshell",
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs",
+        "nmd": "nmd"
+      },
+      "locked": {
+        "lastModified": 1637188214,
+        "narHash": "sha256-aN69kv1YktUxUAIEfWNP3vyfgzOFXtgtc8Bsy451NHk=",
+        "owner": "cruel-intentions",
+        "repo": "devshell-files",
+        "rev": "71e636490b4bb9ca45145cbd2863ef8003f197fe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cruel-intentions",
+        "repo": "devshell-files",
+        "type": "github"
+      }
+    },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1634851050,
+        "narHash": "sha256-N83GlSGPJJdcqhUxSCS/WwW5pksYf3VP1M13cDRTSVA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c91f3de5adaf1de973b797ef7485e441a65b8935",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1636171905,
+        "narHash": "sha256-R2P/QDhhTA5uXAGNm6vi39oh24aTYUswGuWsmTWxxH4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0d5b4445e33b1cd666b107bbdf5920884bbaeb1a",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nmd": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1634073440,
+        "narHash": "sha256-9hSAIDA7LDJ9l/sTzvAAS/juwTi+wRos6Skx0d206jo=",
+        "owner": "rycee",
+        "repo": "nmd",
+        "rev": "12bc57594e12525d2e4422fa7034b2d54e9ea09a",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "rycee",
+        "repo": "nmd",
+        "type": "gitlab"
+      }
+    },
+    "root": {
+      "inputs": {
+        "dsf": "dsf"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
