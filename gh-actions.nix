@@ -1,7 +1,7 @@
 { lib, config, ... }:
 let
   cfg = config.gh-actions.ci-cd;
-  devshell = "nix develop\n";
+  command = "nix develop --command ";
 in
 { 
   imports = [ ./gh-actions-options.nix ];
@@ -18,10 +18,10 @@ in
         '';
       }
       # this config comes from arguments
-      { run = devshell + cfg.pre-build; name = "Pre Build"; }
-      { run = devshell + cfg.build; name = "Build"; }
-      { run = devshell + cfg.test; name = "Test"; }
-      { run = devshell + cfg.deploy; name = "Deploy"; }
+      { run = command + cfg.pre-build; name = "Pre Build"; }
+      { run = command + cfg.build; name = "Build"; }
+      { run = command + cfg.test; name = "Test"; }
+      { run = command + cfg.deploy; name = "Deploy"; }
     ];
   };
 }
