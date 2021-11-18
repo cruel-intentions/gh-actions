@@ -1,8 +1,13 @@
 jobs:
   ci-cd:
-    runs-on: nixpkgs/nix-flakes
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - uses: cachix/install-nix-action@v15
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+          nix_path: channel:nixos-unstable
       - run: nix develop
       - run: echo pre-building
       - run: echo building
