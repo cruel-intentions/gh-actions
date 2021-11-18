@@ -18,10 +18,10 @@ in
         '';
       }
       # this config comes from arguments
-      { run = devshell + cfg.pre-build; }
-      { run = devshell + cfg.build; }
-      { run = devshell + cfg.test; }
-      { run = devshell + cfg.deploy; }
+      { run = devshell + cfg.pre-build; name = "Pre Build"; }
+      { run = devshell + cfg.build; name = "Build"; }
+      { run = devshell + cfg.test; name = "Test"; }
+      { run = devshell + cfg.deploy; name = "Deploy"; }
     ];
   };
 }

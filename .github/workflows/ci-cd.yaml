@@ -8,16 +8,20 @@ jobs:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           nix_path: channel:nixos-unstable
-      - run: |-
+      - name: Pre Build
+        run: |-
           nix develop
           menu
-      - run: |-
+      - name: Build
+        run: |-
           nix develop
           echo building
-      - run: |-
+      - name: Test
+        run: |-
           nix develop
           echo testing
-      - run: |-
+      - name: Deploy
+        run: |-
           nix develop
           echo deploying
 "on": push
