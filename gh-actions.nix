@@ -1,5 +1,7 @@
 { lib, config, ... }:
-let cfg = config.gh-actions.ci-cd;
+let
+  cfg = config.gh-actions.ci-cd;
+  devshell = "nix develop\n";
 in
 { 
   imports = [ ./gh-actions-options.nix ];
@@ -7,7 +9,7 @@ in
     on = "push";
     jobs.ci-cd.runs-on = "ubuntu-latest";
     jobs.ci-cd.steps = [
-      { uses = "actions/checkout@v1"; }
+      { uses = "actions/checkout@v2.4.0"; }
       { 
         uses = "cachix/install-nix-action@v15";
         "with".nix_path = "channel:nixos-unstable";
@@ -15,12 +17,11 @@ in
           access-tokens = github.com=${"$"}{{ secrets.GITHUB_TOKEN }}
         '';
       }
-      { run = "nix develop"; }
       # this config comes from arguments
-      { run = cfg.pre-build; }
-      { run = cfg.build; }
-      { run = cfg.test; }
-      { run = cfg.deploy; }
+      { run = devshell + cfg.pre-build; }
+      { run = devshell + cfg.build; }
+      { run = devshell + cfg.test; }
+      { run = devshell + cfg.deploy; }
     ];
   };
 }
