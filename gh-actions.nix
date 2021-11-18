@@ -11,6 +11,10 @@ let
 in
 { 
   imports = [ ./gh-actions-options.nix ];
+  config.gh-actions.ci-cd.ssh = lib.mkIf (builtins.isString cfg.ssh-secret-name) {
+    key = ''${"$"}{{ secrets.${cfg.ssh-secret-name} }}'';
+    known_hosts = "unnecessary";
+  };
   config.files.alias = lib.mkIf cfg.enable {
     gh-actions-ci-cd-pre-build = cfg.pre-build;
     gh-actions-ci-cd-build = cfg.build;

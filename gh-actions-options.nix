@@ -3,6 +3,15 @@
   options.gh-actions.ci-cd = lib.mkOption {
     type = lib.types.submodule {
       options.enable = lib.mkEnableOption "Github Actions CI-CD";
+      options.ssh-secret-name = lib.mkOption {
+        type = lib.types.nullOr lib.types.nonEmptyStr;
+        default = null;
+        example = "GH_ACTIONS_SSH_KEY";
+        description = ''
+          Name of GH Secret with PRIVATE SSH KEY
+          for more advanced usage try ssh option
+        '';
+      };
       options.ssh = lib.mkOption {
         type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
         default = null;
