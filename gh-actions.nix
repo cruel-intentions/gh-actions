@@ -2,6 +2,12 @@
 let
   cfg = config.gh-actions.ci-cd;
   cmd = step: "nix develop --command gh-actions-ci-cd-${step}";
+  needs-ssh-key = if builtins.isNull cfg.ssh then []
+    else [{
+      name = "Install SSH Key";
+      uses = "shimataro/ssh-key-action@3c9b0fc6f2d223b8450b02a0445f526350fc73e0";
+      "with" = cfg.ssh;
+    }];
 in
 { 
   imports = [ ./gh-actions-options.nix ];
@@ -14,7 +20,7 @@ in
   config.files.yaml."/.github/workflows/ci-cd.yaml" = lib.mkIf cfg.enable {
     on = cfg.on;
     jobs.ci-cd.runs-on = "ubuntu-latest";
-    jobs.ci-cd.steps = [
+    jobs.ci-cd.steps = needs-ssh-key ++ [
       { uses = "actions/checkout@v2.4.0"; }
       { 
         uses = "cachix/install-nix-action@v15";

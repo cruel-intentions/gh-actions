@@ -3,6 +3,20 @@
   options.gh-actions.ci-cd = lib.mkOption {
     type = lib.types.submodule {
       options.enable = lib.mkEnableOption "Github Actions CI-CD";
+      options.ssh = lib.mkOption {
+        type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
+        default = null;
+        example.key = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
+        description = ''
+          https://github.com/marketplace/actions/install-ssh-key
+          Config for ssh installation
+          There are two reasons to set it
+          1. our deploy runs in ssh
+          2. we have some private git repository
+
+          In this last case we should add your public key to some user with repository access (in github) or to our private server.
+        '';
+      };
       options.on = lib.mkOption {
         type = lib.types.attrsOf lib.types.anything;
         default.push.branches = ["master"];
