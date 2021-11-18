@@ -56,6 +56,12 @@
         example = "aws s3 sync ./build s3://my-bucket";
         description = "Command to run as deploy step";
       };
+      options.post-deploy = lib.mkOption {
+        type = lib.types.str;
+        default = "echo Im done";
+        example = "echo Im done";
+        description = "Command that run after deploy";
+      };
     };
     default = {};
     description = "Configure your github actions CI/CD";

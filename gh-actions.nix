@@ -20,6 +20,7 @@ in
     gh-actions-ci-cd-build = cfg.build;
     gh-actions-ci-cd-test = cfg.test;
     gh-actions-ci-cd-deploy = cfg.deploy;
+    gh-actions-ci-cd-post-deploy = cfg.post-deploy;
   };
   config.files.yaml."/.github/workflows/ci-cd.yaml" = lib.mkIf cfg.enable {
     on = cfg.on;
@@ -38,6 +39,8 @@ in
       { run = cmd "build"; name = "Build"; }
       { run = cmd "test"; name = "Test"; }
       { run = cmd "deploy"; name = "Deploy"; }
+      { run = cmd "deploy"; name = "Deploy"; }
+      { run = cmd "post-deploy"; name = "Pos eploy"; }
     ];
   };
 }

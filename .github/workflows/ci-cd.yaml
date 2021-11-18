@@ -16,6 +16,10 @@ jobs:
         run: nix develop --command gh-actions-ci-cd-test
       - name: Deploy
         run: nix develop --command gh-actions-ci-cd-deploy
+      - name: Deploy
+        run: nix develop --command gh-actions-ci-cd-deploy
+      - name: Pos eploy
+        run: nix develop --command gh-actions-ci-cd-post-deploy
 "on":
   push:
     branches:
