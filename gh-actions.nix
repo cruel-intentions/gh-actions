@@ -28,8 +28,11 @@ let
     deploy = arrOfIfStr cfg.deploy
       { run = cmd "${name}-deploy"; name = "Deploy"; env = env-vars; };
     post-deploy = arrOfIfStr cfg.post-deploy
-      { run = cmd "${name}-post-deploy"; name = "Pos eploy"; env = env-vars; };
-    checkout = [ { uses = "actions/checkout@v2.4.0"; } ];
+      { run = cmd "${name}-post-deploy"; name = "Post Deploy"; env = env-vars; };
+      checkout = [{
+        uses = "actions/checkout@v2.4.0";
+        "with".fetch-depth = 0;
+      }];
     install-nix = [{ 
       uses = "cachix/install-nix-action@v15";
       "with".nix_path = "channel:nixos-unstable";
