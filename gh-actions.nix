@@ -18,7 +18,7 @@ let
       "with" = sshInfo;
     };
     cmd = step: "nix develop --command gh-actions-${step}";
-    env-vars = env-var: lib.mkIf (builtins.isAttrs env-var) env-var;
+    env-vars = env-var: lib.mkIf (builtins.length (builtins.attrNames env-var) > 0) env-var;
     pre-build = arrOfIfStr cfg.pre-build {
       run = cmd "${name}-pre-build";
       name = "Pre Build";

@@ -26,42 +26,36 @@ let
       '';
     };
     options.env = lib.mkOption {
-      description "env vars for steps";
+      description = "env vars for steps";
       default = {};
       type = lib.types.submodule {
-        options.pre-build = {
-          type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
-          default = null;
+        options.pre-build = lib.mkOption {
+          type = lib.types.attrsOf lib.types.str;
+          default = {};
           example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
           description = ''Env variable used by steps'';
         };
-        options.build = {
-          type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
-          default = null;
+        options.build = lib.mkOption {
+          type = lib.types.attrsOf lib.types.str;
+          default = {};
           example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
           description = ''Env variable used by steps'';
         };
-        options.test = {
-          type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
-          default = null;
+        options.test = lib.mkOption {
+          type = lib.types.attrsOf lib.types.str;
+          default = {};
           example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
           description = ''Env variable used by steps'';
         };
-        options.test = {
-          type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
-          default = null;
+        options.deploy = lib.mkOption {
+          type = lib.types.attrsOf lib.types.str;
+          default = {};
           example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
           description = ''Env variable used by steps'';
         };
-        options.deploy = {
-          type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
-          default = null;
-          example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
-          description = ''Env variable used by steps'';
-        };
-        options.post-deploy = {
-          type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
-          default = null;
+        options.post-deploy = lib.mkOption {
+          type = lib.types.attrsOf lib.types.str;
+          default = {};
           example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
           description = ''Env variable used by steps'';
         };
