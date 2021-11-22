@@ -26,10 +26,46 @@ let
       '';
     };
     options.env = lib.mkOption {
-      type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
-      default = null;
-      example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
-      description = ''Env variable used by steps'';
+      description "env vars for steps";
+      default = {};
+      type = lib.types.submodule {
+        options.pre-build = {
+          type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
+          default = null;
+          example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
+          description = ''Env variable used by steps'';
+        };
+        options.build = {
+          type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
+          default = null;
+          example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
+          description = ''Env variable used by steps'';
+        };
+        options.test = {
+          type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
+          default = null;
+          example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
+          description = ''Env variable used by steps'';
+        };
+        options.test = {
+          type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
+          default = null;
+          example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
+          description = ''Env variable used by steps'';
+        };
+        options.deploy = {
+          type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
+          default = null;
+          example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
+          description = ''Env variable used by steps'';
+        };
+        options.post-deploy = {
+          type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
+          default = null;
+          example.GIPHY_TOKEN = ''${"$"}{{ secret.GH_ACTIONS_SSH_KEY }}'';
+          description = ''Env variable used by steps'';
+        };
+      };
     };
     options.on = lib.mkOption {
       type = lib.types.attrsOf lib.types.anything;

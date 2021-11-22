@@ -17,22 +17,37 @@ let
       uses = "shimataro/ssh-key-action@3c9b0fc6f2d223b8450b02a0445f526350fc73e0";
       "with" = sshInfo;
     };
-    env-vars = lib.mkIf (builtins.isAttrs cfg.env) cfg.env;
     cmd = step: "nix develop --command gh-actions-${step}";
-    pre-build = arrOfIfStr cfg.pre-build
-      { run = cmd "${name}-pre-build"; name = "Pre Build"; env = env-vars; };
-    build = arrOfIfStr cfg.build
-      { run = cmd "${name}-build"; name = "Build"; env = env-vars; };
-    test = arrOfIfStr cfg.test
-      { run = cmd "${name}-test"; name = "Test"; env = env-vars; };
-    deploy = arrOfIfStr cfg.deploy
-      { run = cmd "${name}-deploy"; name = "Deploy"; env = env-vars; };
-    post-deploy = arrOfIfStr cfg.post-deploy
-      { run = cmd "${name}-post-deploy"; name = "Post Deploy"; env = env-vars; };
-      checkout = [{
+    env-vars = env-var: lib.mkIf (builtins.isAttrs env-var) env-var;
+    pre-build = arrOfIfStr cfg.pre-build {
+      run = cmd "${name}-pre-build";
+      name = "Pre Build";
+      env = env-vars cfg.env.pre-buid;
+    };
+    build = arrOfIfStr cfg.build {
+      run = cmd "${name}-build";
+      name = "Build";
+      env = env-vars cfg.env.build;
+    };
+    test = arrOfIfStr cfg.test {
+      run = cmd "${name}-test";
+      name = "Test";
+      env = env-vars cfg.env.test;
+    };
+    deploy = arrOfIfStr cfg.deploy {
+      run = cmd "${name}-deploy";
+      name = "Deploy";
+      env = env-vars cfg.env.deploy;
+    };
+    post-deploy = arrOfIfStr cfg.post-deploy {
+      run = cmd "${name}-post-deploy";
+      name = "Post Deploy";
+      env = env-vars cfg.env.post-deploy;
+    };
+    checkout = [{
         uses = "actions/checkout@v2.4.0";
         "with".fetch-depth = 0;
-      }];
+    }];
     install-nix = [{ 
       uses = "cachix/install-nix-action@v15";
       "with".nix_path = "channel:nixos-unstable";
