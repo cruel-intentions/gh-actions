@@ -22,7 +22,7 @@ let
     pre-build = arrOfIfStr cfg.pre-build {
       run = cmd "${name}-pre-build";
       name = "Pre Build";
-      env = env-vars cfg.env.pre-buid;
+      env = env-vars cfg.env.pre-build;
     };
     build = arrOfIfStr cfg.build {
       run = cmd "${name}-build";
