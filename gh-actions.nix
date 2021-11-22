@@ -59,16 +59,18 @@ let
   {
     "/.github/workflows/${name}.yaml" = lib.mkIf cfg.enable {
       on = cfg.on;
-      jobs.ci-cd.runs-on = "ubuntu-latest";
-      jobs.ci-cd.steps = needs-ssh-key
-        ++ checkout
-        ++ install-nix
-        ++ pre-build
-        ++ build
-        ++ test
-        ++ deploy
-        ++ post-deploy
-      ;
+      jobs.${name} = {
+        runs-on = "ubuntu-latest";
+        steps = needs-ssh-key
+          ++ checkout
+          ++ install-nix
+          ++ pre-build
+          ++ build
+          ++ test
+          ++ deploy
+          ++ post-deploy
+        ;
+      };
     };
   };
   yamls = lib.mapAttrsToList yaml-file workflows;

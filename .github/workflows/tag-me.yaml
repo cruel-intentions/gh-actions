@@ -1,5 +1,5 @@
 jobs:
-  ci-cd:
+  tag-me:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.4.0
@@ -10,10 +10,8 @@ jobs:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           nix_path: channel:nixos-unstable
-      - name: Build
-        run: nix develop --command gh-actions-ci-cd-build
       - name: Deploy
-        run: nix develop --command gh-actions-ci-cd-deploy
+        run: nix develop --command gh-actions-tag-me-deploy
 "on":
   push:
     branches:

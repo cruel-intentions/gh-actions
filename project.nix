@@ -22,9 +22,8 @@
   config.files.license.spdx.vars.year = "2021";
   config.files.license.spdx.vars."copyright holders" = "Cruel Intentions";
 
-  config.gh-actions.ci-cd.enable = true;
-  config.gh-actions.ci-cd.build = "menu";
-  config.gh-actions.ci-cd.deploy = ''
+  config.gh-actions.tag-me.enable = true;
+  config.gh-actions.tag-me.deploy = ''
     git tag v$(convco version --bump)
     git push --tag
   '';
