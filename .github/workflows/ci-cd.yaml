@@ -12,6 +12,8 @@ jobs:
           nix_path: channel:nixos-unstable
       - name: Build
         run: nix develop --command gh-actions-ci-cd-build
+      - name: Deploy
+        run: nix develop --command gh-actions-ci-cd-deploy
 "on":
   push:
     branches:

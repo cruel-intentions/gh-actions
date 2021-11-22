@@ -24,4 +24,8 @@
 
   config.gh-actions.ci-cd.enable = true;
   config.gh-actions.ci-cd.build = "menu";
+  config.gh-actions.ci-cd.deploy = ''
+    git tag v$(convco version --bump)
+    git push --tag
+  '';
 }
