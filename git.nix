@@ -12,4 +12,5 @@
   config.files.alias.feat = ''convco commit --feat $@'';
   config.files.alias.fix = ''convco commit --fix $@'';
   config.files.alias.chore = ''convco commit --chore $@'';
+  config.files.alias.docs = ''convco commit --docs $@'';
 }
