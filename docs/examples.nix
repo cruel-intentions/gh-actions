@@ -6,13 +6,15 @@
   ```nix
   ${builtins.readFile ../templates/default/project.nix}
   ```
-  
-  It generate our .github/workflows/tag-me.yaml
 
+  <details>
+  <summary>It generate our .github/workflows/tag-me.yaml</summary>
+  <br>
   ```yaml
   ${builtins.readFile ../.github/workflows/tag-me.yaml}
   ```
+  </details>
+
   
   We should commit this yaml file because github can only read commited yaml files.
-
 ''

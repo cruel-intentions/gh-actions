@@ -44,6 +44,7 @@ The most basic example is used by this project to tag it self
   config.gh-actions.tag-me.enable = true;
   config.gh-actions.tag-me.deploy = ''
     # tag this project on push to master
+    # this a bash script
     git tag v$(convco version --bump)
     git push --tag
   '';
@@ -51,8 +52,9 @@ The most basic example is used by this project to tag it self
 
 ```
 
-It generate our .github/workflows/tag-me.yaml
-
+<details>
+<summary>It generate our .github/workflows/tag-me.yaml</summary>
+<br>
 ```yaml
 jobs:
   tag-me:
@@ -74,6 +76,7 @@ jobs:
       - master
 
 ```
+</details>
+
 
 We should commit this yaml file because github can only read commited yaml files.
-
