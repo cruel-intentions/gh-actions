@@ -55,6 +55,7 @@ The most basic example is used by this project to tag it self
 <details>
 <summary>It generate our .github/workflows/tag-me.yaml</summary>
 <br>
+
 ```yaml
 jobs:
   tag-me:
@@ -76,6 +77,7 @@ jobs:
       - master
 
 ```
+
 </details>
 
 
