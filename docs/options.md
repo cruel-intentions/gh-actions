@@ -1,4 +1,4 @@
-## About
+## Options
 
 ##### options.gh-actions
 
@@ -7,7 +7,7 @@ Configure your github actions
 **Type**
 _attrsOf workflows_
 
-It means an hashmap (object fo JS) with any key (where te key is name of file) and has _workflows_ as value
+It means an hashmap (object of JS) with any key (where te key is name of file) and has _workflows_ as value
 
 **Example**
 
@@ -37,7 +37,7 @@ It means is a container of other sub options (if we where Object Oriented develo
 }
 ```
 
-####### enable
+###### enable
 
 Enable or disable our workflows
 
@@ -56,7 +56,7 @@ _false_
 ```
 
 
-####### on
+###### on
 
 Determines when our action should run
 See [github action](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#on) documentation
@@ -73,7 +73,7 @@ _{ push.branches = [ "master" ]; }_
   options.gh-actions.MY-FILE-NAME.on.push.branches = ["staging"];
 ```
 
-####### pre-build
+###### pre-build
 
 Bash script of our pre-build step
 
@@ -89,7 +89,7 @@ _null_
   options.gh-actions.MY-FILE-NAME.pre-build = "npm i";
 ```
 
-####### build
+###### build
 
 Bash script of our build step
 
@@ -105,7 +105,7 @@ _null_
   options.gh-actions.MY-FILE-NAME.build = "npm run build";
 ```
 
-####### test
+###### test
 
 Bash script of our test step
 
@@ -121,7 +121,7 @@ _null_
   options.gh-actions.MY-FILE-NAME.test = "npm run test";
 ```
 
-####### deploy
+###### deploy
 
 Bash script of our deploy step
 
@@ -137,7 +137,7 @@ _null_
   options.gh-actions.MY-FILE-NAME.deploy = "aws s3 sync ./build s3://my-bucket";
 ```
 
-####### post-deploy
+###### post-deploy
 
 Bash script of our post deploy step
 
@@ -153,7 +153,7 @@ _null_
   options.gh-actions.MY-FILE-NAME.post-deploy = "echo uhhuuuuu";
 ```
 
-####### ssh-secret-name
+###### ssh-secret-name
 
 The name of your Github Secret with SSH Private Key
 
@@ -171,7 +171,7 @@ _null_
   options.gh-actions.MY-FILE-NAME.ssh-secret-name = "MY_GH_SSH_SECRET_NAME";
 ```
 
-####### ssh
+###### ssh
 
 If we need more flexibility for SSH configuration
 
@@ -189,7 +189,7 @@ _null_
   options.gh-actions.MY-FILE-NAME.ssh.key = ''${"$"}{{ secret.MY_GH_SSH_SECRET_NAME }}'';
 ```
 
-####### env
+###### env
 
 When any of your actions need env variable this suboption could be defined
 
@@ -215,8 +215,5 @@ _{}_
     post-deploy.OTHER_ENV_VAR_NAME = "OTHER_ENV_VAR_VALUE";
   };
 ```
-
-
-
 
 
