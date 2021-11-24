@@ -7,6 +7,7 @@
   The most basic example is used by this project to tag it
   
   ```nix
+  # project.nix
   ${builtins.readFile ../templates/default/project.nix}
   ```
 
@@ -16,6 +17,7 @@
 
 
   ```yaml
+  # .github/workflows/tag-me.yaml
   ${builtins.readFile ../.github/workflows/tag-me.yaml}
   ```
 
@@ -32,6 +34,7 @@
   This is a more complex example
 
   ```nix
+  # examples/nodejs.nix
   ${builtins.readFile ../examples/nodejs.nix}
 
   ```

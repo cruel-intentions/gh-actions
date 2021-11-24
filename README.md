@@ -43,6 +43,7 @@ See [Devshell-files docs](https://github.com/cruel-intentions/devshell-files#sha
 The most basic example is used by this project to tag it
 
 ```nix
+# project.nix
 { 
   # actions are disable by default, enable it (required)
   config.gh-actions.tag-me.enable = true;
@@ -65,6 +66,7 @@ The most basic example is used by this project to tag it
 
 
 ```yaml
+# .github/workflows/tag-me.yaml
 jobs:
   tag-me:
     runs-on: ubuntu-latest
@@ -99,6 +101,7 @@ We should commit this yaml file because github can only read commited yaml files
 This is a more complex example
 
 ```nix
+# examples/nodejs.nix
 {
   # 'ci-cd' is the name of genereted file
   # but we are free to change it
