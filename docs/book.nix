@@ -32,9 +32,11 @@ in
     git rm --cached -r .
     cd gh-pages
     mdbook build
-    cd book
-    git add --git-dir=../../ . 
-    git commit --git-dir=../../ -m "docs(gh-pages): update gh-pages" .
-    git push --git-dir=../../ -u origin gh-pages --force
+    cd ../
+    mv -r gh-pages/book/* ./
+    rm -rf gh-pages
+    git add . 
+    git commit -m "docs(gh-pages): update gh-pages" .
+    git push -u origin gh-pages --force
   '';
 }
