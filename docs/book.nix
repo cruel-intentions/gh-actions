@@ -25,20 +25,6 @@ in
   config.files.text."/gh-pages/src/examples.md" = builtins.import ./examples.nix;
   config.files.docs."/gh-pages/src/options.md".modules = [ ../gh-actions-options.nix ];
   config.files.gitignore.pattern."gh-pages" = true;
-
   config.gh-actions.gh-pages.enable = true;
-  config.gh-actions.gh-pages.build = ''
-    git config --global user.name $GITHUB_ACTOR
-    git config --global user.email $GITHUB_ACTOR'@users.noreply.github.com'
-    git checkout --orphan gh-pages
-    git rm --cached -r .
-    cd gh-pages
-    mdbook build
-    cd ../
-    mv  gh-pages/book/* ./
-    rm -rf gh-pages
-    git add . 
-    git commit -m "docs(gh-pages): update gh-pages" .
-    git push -u origin gh-pages --force
-  '';
+  config.gh-actions.gh-pages.build = ''publish-as-gh-pages'';
 }
