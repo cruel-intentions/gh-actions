@@ -33,7 +33,7 @@ in
     cd gh-pages
     mdbook build
     cd ../
-    mv -r gh-pages/book/* ./
+    mv  gh-pages/book/* ./
     rm -rf gh-pages
     git add . 
     git commit -m "docs(gh-pages): update gh-pages" .
