@@ -28,8 +28,13 @@ in
 
   config.gh-actions.gh-pages.enable = true;
   config.gh-actions.gh-pages.build = ''
-    git config --global user.name $GITHUB_ACTOR
-    git config --global user.email $GITHUB_ACTOR@users.noreply.github.com
-    publish-as-gh-pages
+    git checkout --orphan gh-pages
+    git rm --cached -r .
+    cd gh-pages
+    mdbook build
+    cd book
+    git add --git-dir=../../ . 
+    git commit --git-dir=../../ -m "docs(gh-pages): update gh-pages" .
+    git push --git-dir=../../ -u origin gh-pages --force
   '';
 }
