@@ -28,6 +28,8 @@ in
 
   config.gh-actions.gh-pages.enable = true;
   config.gh-actions.gh-pages.build = ''
+    git config --global user.name $GITHUB_ACTOR
+    git config --global user.email $GITHUB_ACTOR'@users.noreply.github.com'
     git checkout --orphan gh-pages
     git rm --cached -r .
     cd gh-pages
