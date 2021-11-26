@@ -23,11 +23,11 @@
         "nmd": "nmd"
       },
       "locked": {
-        "lastModified": 1637881795,
-        "narHash": "sha256-hkqwI4RrrnDPGugiw4HhCGzJFoLs7heo1Dg5HV82K9c=",
+        "lastModified": 1637885523,
+        "narHash": "sha256-6Ul+IC5uHLHmbVH9s68maxZjiLOSzE/h8q+r3eGEOmM=",
         "owner": "cruel-intentions",
         "repo": "devshell-files",
-        "rev": "ce8851cbc6df7c662e83375e775248895d1ad81e",
+        "rev": "07ecb7ffabb74c14aba649c832e951069858d475",
         "type": "github"
       },
       "original": {

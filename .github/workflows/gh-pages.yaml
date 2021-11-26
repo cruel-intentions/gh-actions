@@ -10,8 +10,6 @@ jobs:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           nix_path: channel:nixos-unstable
-      - name: Pre Build
-        run: nix develop --command gh-actions-gh-pages-pre-build
       - name: Build
         run: nix develop --command gh-actions-gh-pages-build
 "on":

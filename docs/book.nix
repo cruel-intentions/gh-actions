@@ -27,9 +27,5 @@ in
   config.files.gitignore.pattern."gh-pages" = true;
 
   config.gh-actions.gh-pages.enable = true;
-  config.gh-actions.gh-pages.pre-build = ''files'';
-  config.gh-actions.gh-pages.build = ''
-    ls
-    publish-as-gh-pages
-  '';
+  config.gh-actions.gh-pages.build = ''publish-as-gh-pages'';
 }
