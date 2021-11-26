@@ -27,5 +27,9 @@ in
   config.files.gitignore.pattern."gh-pages" = true;
 
   config.gh-actions.gh-pages.enable = true;
-  config.gh-actions.gh-pages.build = ''publish-as-gh-pages'';
+  config.gh-actions.gh-pages.build = ''
+    git config --global user.name $GITHUB_ACTOR
+    git config --global user.email $GITHUB_ACTOR@users.noreply.github.com
+    publish-as-gh-pages
+  '';
 }
