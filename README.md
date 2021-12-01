@@ -149,7 +149,9 @@ This is a more complex example
 
 ## Options
 
-##### options.gh-actions
+For more updated documentation see auto generated from source at [https://cruel-intentions.github.io/gh-actions/options.html](https://cruel-intentions.github.io/gh-actions/options.html)
+
+##### config.gh-actions
 
 Configure your github actions
 
@@ -162,7 +164,7 @@ It means an hashmap (object of JS) with any key (where te key is name of file) a
 
 ```nix
 {
-  options.gh-actions.MY-FILE-NAME = {
+  config.gh-actions.MY-FILE-NAME = {
     # write your WORKFLOW here
   };
 }
@@ -180,9 +182,9 @@ It means is a container of other sub options (if we where Object Oriented develo
 
 ```nix
 {
-  options.gh-actions.MY-FILE-NAME = { enable = true; };
+  config.gh-actions.MY-FILE-NAME = { enable = true; };
   # it is same as
-  # options.gh-actions.MY-FILE-NAME.enable = true;
+  # config.gh-actions.MY-FILE-NAME.enable = true;
 }
 ```
 
@@ -200,7 +202,7 @@ _false_
 
 ```nix
 {
-  options.gh-actions.MY-FILE-NAME.enable = true;
+  config.gh-actions.MY-FILE-NAME.enable = true;
 }
 ```
 
@@ -219,7 +221,7 @@ _{ push.branches = [ "master" ]; }_
 **Example**
 
 ```nix
-  options.gh-actions.MY-FILE-NAME.on.push.branches = ["staging"];
+  config.gh-actions.MY-FILE-NAME.on.push.branches = ["staging"];
 ```
 
 ###### pre-build
@@ -235,7 +237,7 @@ _null_
 **Example**
 
 ```nix
-  options.gh-actions.MY-FILE-NAME.pre-build = "npm i";
+  config.gh-actions.MY-FILE-NAME.pre-build = "npm i";
 ```
 
 ###### build
@@ -251,7 +253,7 @@ _null_
 **Example**
 
 ```nix
-  options.gh-actions.MY-FILE-NAME.build = "npm run build";
+  config.gh-actions.MY-FILE-NAME.build = "npm run build";
 ```
 
 ###### test
@@ -267,7 +269,7 @@ _null_
 **Example**
 
 ```nix
-  options.gh-actions.MY-FILE-NAME.test = "npm run test";
+  config.gh-actions.MY-FILE-NAME.test = "npm run test";
 ```
 
 ###### deploy
@@ -283,7 +285,7 @@ _null_
 **Example**
 
 ```nix
-  options.gh-actions.MY-FILE-NAME.deploy = "aws s3 sync ./build s3://my-bucket";
+  config.gh-actions.MY-FILE-NAME.deploy = "aws s3 sync ./build s3://my-bucket";
 ```
 
 ###### post-deploy
@@ -299,7 +301,7 @@ _null_
 **Example**
 
 ```nix
-  options.gh-actions.MY-FILE-NAME.post-deploy = "echo uhhuuuuu";
+  config.gh-actions.MY-FILE-NAME.post-deploy = "echo uhhuuuuu";
 ```
 
 ###### ssh-secret-name
@@ -317,7 +319,7 @@ _null_
 **Example**
 
 ```nix
-  options.gh-actions.MY-FILE-NAME.ssh-secret-name = "MY_GH_SSH_SECRET_NAME";
+  config.gh-actions.MY-FILE-NAME.ssh-secret-name = "MY_GH_SSH_SECRET_NAME";
 ```
 
 ###### ssh
@@ -335,7 +337,7 @@ _null_
 **Example**
 
 ```nix
-  options.gh-actions.MY-FILE-NAME.ssh.key = ''${"$"}{{ secret.MY_GH_SSH_SECRET_NAME }}'';
+  config.gh-actions.MY-FILE-NAME.ssh.key = ''${"$"}{{ secret.MY_GH_SSH_SECRET_NAME }}'';
 ```
 
 ###### env
@@ -352,7 +354,7 @@ _{}_
 **Example**
 
 ```nix
-  options.gh-actions.MY-FILE-NAME.env = {
+  config.gh-actions.MY-FILE-NAME.env = {
     pre-build = {
       ENV_VAR_NAME = "ENV_VAR_VALUE";
       OTHER_ENV_VAR_NAME = "OTHER_ENV_VAR_VALUE";

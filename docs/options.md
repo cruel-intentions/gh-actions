@@ -2,7 +2,7 @@
 
 For more updated documentation see auto generated from source at [https://cruel-intentions.github.io/gh-actions/options.html](https://cruel-intentions.github.io/gh-actions/options.html)
 
-##### options.gh-actions
+##### config.gh-actions
 
 Configure your github actions
 
