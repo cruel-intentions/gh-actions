@@ -3,4 +3,5 @@
 - [About](./about.md)
 - [Usage](./usage.md)
 - [Examples](./examples.md)
-- [Options](./options.md)
+- [GH Actions Options](./options.md)
+- [Dependabot Options](./options-dependabot.md)

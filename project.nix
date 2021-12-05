@@ -7,6 +7,7 @@ in
 {
   imports = [
     ./gh-actions.nix
+    ./dependabot.nix
     ./git.nix
     ./license.nix
     ./readme.nix

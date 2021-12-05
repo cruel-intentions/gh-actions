@@ -24,6 +24,7 @@ in
   config.files.text."/gh-pages/src/usage.md" = builtins.readFile ./usage.md;
   config.files.text."/gh-pages/src/examples.md" = builtins.import ./examples.nix;
   config.files.docs."/gh-pages/src/options.md".modules = [ ../gh-actions-options.nix ];
+  config.files.docs."/gh-pages/src/options-dependabot.md".modules = [ ../dependabot-options.nix ];
   config.files.gitignore.pattern."gh-pages" = true;
   config.gh-actions.gh-pages.enable = true;
   config.gh-actions.gh-pages.build = ''publish-as-gh-pages'';
