@@ -46,11 +46,11 @@ The most basic example is used by this project to tag it
 # project.nix
 { 
   # actions are disable by default, enable it (required)
-  config.gh-actions.tag-me.enable = true;
+  gh-actions.tag-me.enable = true;
   # there are 5 optional configurable steps
   # pre-build, build, test, deploy, post-deploy
   # only defined steps goes to yaml file
-  config.gh-actions.tag-me.build = ''
+  gh-actions.tag-me.build = ''
     # tag this project on push to master
     # this is a bash script
     git tag v$(convco version --bump)
@@ -151,7 +151,7 @@ This is a more complex example
 
 For more updated documentation see auto generated from source at [https://cruel-intentions.github.io/gh-actions/options.html](https://cruel-intentions.github.io/gh-actions/options.html)
 
-##### config.gh-actions
+##### gh-actions
 
 Configure your github actions
 
@@ -164,7 +164,7 @@ It means an hashmap (object of JS) with any key (where te key is name of file) a
 
 ```nix
 {
-  config.gh-actions.MY-FILE-NAME = {
+  gh-actions.MY-FILE-NAME = {
     # write your WORKFLOW here
   };
 }
@@ -182,9 +182,9 @@ It means is a container of other sub options (if we where Object Oriented develo
 
 ```nix
 {
-  config.gh-actions.MY-FILE-NAME = { enable = true; };
+  gh-actions.MY-FILE-NAME = { enable = true; };
   # it is same as
-  # config.gh-actions.MY-FILE-NAME.enable = true;
+  # gh-actions.MY-FILE-NAME.enable = true;
 }
 ```
 
@@ -202,7 +202,7 @@ _false_
 
 ```nix
 {
-  config.gh-actions.MY-FILE-NAME.enable = true;
+  gh-actions.MY-FILE-NAME.enable = true;
 }
 ```
 
@@ -221,7 +221,7 @@ _{ push.branches = [ "master" ]; }_
 **Example**
 
 ```nix
-  config.gh-actions.MY-FILE-NAME.on.push.branches = ["staging"];
+  gh-actions.MY-FILE-NAME.on.push.branches = ["staging"];
 ```
 
 ###### pre-build
@@ -237,7 +237,7 @@ _null_
 **Example**
 
 ```nix
-  config.gh-actions.MY-FILE-NAME.pre-build = "npm i";
+  gh-actions.MY-FILE-NAME.pre-build = "npm i";
 ```
 
 ###### build
@@ -253,7 +253,7 @@ _null_
 **Example**
 
 ```nix
-  config.gh-actions.MY-FILE-NAME.build = "npm run build";
+  gh-actions.MY-FILE-NAME.build = "npm run build";
 ```
 
 ###### test
@@ -269,7 +269,7 @@ _null_
 **Example**
 
 ```nix
-  config.gh-actions.MY-FILE-NAME.test = "npm run test";
+  gh-actions.MY-FILE-NAME.test = "npm run test";
 ```
 
 ###### deploy
@@ -285,7 +285,7 @@ _null_
 **Example**
 
 ```nix
-  config.gh-actions.MY-FILE-NAME.deploy = "aws s3 sync ./build s3://my-bucket";
+  gh-actions.MY-FILE-NAME.deploy = "aws s3 sync ./build s3://my-bucket";
 ```
 
 ###### post-deploy
@@ -301,7 +301,7 @@ _null_
 **Example**
 
 ```nix
-  config.gh-actions.MY-FILE-NAME.post-deploy = "echo uhhuuuuu";
+  gh-actions.MY-FILE-NAME.post-deploy = "echo uhhuuuuu";
 ```
 
 ###### ssh-secret-name
@@ -319,7 +319,7 @@ _null_
 **Example**
 
 ```nix
-  config.gh-actions.MY-FILE-NAME.ssh-secret-name = "MY_GH_SSH_SECRET_NAME";
+  gh-actions.MY-FILE-NAME.ssh-secret-name = "MY_GH_SSH_SECRET_NAME";
 ```
 
 ###### ssh
@@ -337,7 +337,7 @@ _null_
 **Example**
 
 ```nix
-  config.gh-actions.MY-FILE-NAME.ssh.key = ''${"$"}{{ secret.MY_GH_SSH_SECRET_NAME }}'';
+  gh-actions.MY-FILE-NAME.ssh.key = ''${"$"}{{ secret.MY_GH_SSH_SECRET_NAME }}'';
 ```
 
 ###### env
@@ -354,7 +354,7 @@ _{}_
 **Example**
 
 ```nix
-  config.gh-actions.MY-FILE-NAME.env = {
+  gh-actions.MY-FILE-NAME.env = {
     pre-build = {
       ENV_VAR_NAME = "ENV_VAR_VALUE";
       OTHER_ENV_VAR_NAME = "OTHER_ENV_VAR_VALUE";
