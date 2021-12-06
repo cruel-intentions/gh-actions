@@ -14,33 +14,15 @@ let
   assignees.description = ''
     Who will be assigned to pull request
   '';
-  timezone.default = null;
-  timezone.example = "Asia/Tokyo";
-  timezone.type = nullOrNonEmptyString;
-  timezone.description = ''
-    Specify an time zone, time zone identifier is defined by
-    [iana](https://www.iana.org/time-zones)
+
+  auto-rebase.default = null;
+  auto-rebase.example = false;
+  auto-rebase.type = lib.types.nullOr lib.types.bool;
+  auto-rebase.description = ''
+    Disable auto rebase (enabled by default)
+    see [github documentations](${docs-url}#rebase-strategy)
   '';
-  intervals = ["daily" "weekly" "monthly"];
-  interval.default = "weekly";
-  interval.example = "monthly";
-  interval.type = lib.types.enum intervals;
-  interval.description = ''
-    Periodicity of check: ${toString intervals}
-  '';
-  days = ["monday" "tuesday" "wednesday" "thursday" "friday" "saturday" "sunday"];
-  day.default = null;
-  day.example = "friday";
-  day.type = lib.types.nullOr (lib.types.enum days);
-  day.description = ''
-    Day of week for weekly run (null is monday)
-  '';
-  time.default = null;
-  time.example = "16:25";
-  time.type = lib.types.nullOr (lib.types.strMatching "[0-2][0-9]:[0-5][0-9]");
-  time.description = ''
-    Time of day to check for updates (format: hh:mm)
-  '';
+
   allows.all.default = false;
   allows.all.example = ["express"];
   allows.all.type = boolOr nonEmptyListOfNonEmptyStr;
@@ -79,6 +61,52 @@ let
     Customize which dependencies are updated,
     see [dependabot docs](${docs-url}#allow)
   '';
+
+  commits.prefix.example = "RED-ALERT";
+  commits.prefix.type = lib.types.nonEmptyStr;
+  commits.prefix.description = "Prefix of commit message";
+  commits.dev-prefix.default = null;
+  commits.dev-prefix.example = "warn";
+  commits.dev-prefix.type = nullOrNonEmptyString;
+  commits.dev-prefix.description = "Prefix of commit message for development dependencies";
+  commits.scope.default = false;
+  commits.scope.example = true;
+  commits.scope.type = lib.types.bool;
+  commits.scope.description = "If commit message should be contain scope";
+  commit.default = null;
+  commit.example.prefix = "RED-ALERT";
+  commit.example.prefix-dev = "warn";
+  commit.example.scope = true;
+  commit.type = lib.types.nullOr (submoduleOf commits);
+  commit.description = ''
+    Customize commit message prefix,
+    see [dependabot docs](${docs-url}#commit-message)
+  '';
+
+  days = ["monday" "tuesday" "wednesday" "thursday" "friday" "saturday" "sunday"];
+  day.default = null;
+  day.example = "friday";
+  day.type = lib.types.nullOr (lib.types.enum days);
+  day.description = ''
+    Day of week for weekly run (null is monday)
+  '';
+
+  labels.default = [];
+  labels.example = ["depencencies"];
+  labels.type = listOfNonEmptyStr;
+  labels.description = ''
+    Labels to be added in pull request
+    see [github documentations](${docs-url}#label)
+  '';
+
+  limit.default = null;
+  limit.example = 5;
+  limit.type = lib.types.nullOr lib.types.int;
+  limit.description = ''
+    Maximum open pull requests before next update
+    see [github documentations](${docs-url}#open-pull-requests-limit)
+  '';
+
   ignores.versions.default = [];
   ignores.versions.example = ["5.x.x" "^4.0.0"];
   ignores.versions.type = listOfNonEmptyStr;
@@ -114,26 +142,7 @@ let
     Customize which dependencies are ignored,
     see [dependabot docs](#ignore)
   '';
-  commits.prefix.example = "RED-ALERT";
-  commits.prefix.type = lib.types.nonEmptyStr;
-  commits.prefix.description = "Prefix of commit message";
-  commits.dev-prefix.default = null;
-  commits.dev-prefix.example = "warn";
-  commits.dev-prefix.type = nullOrNonEmptyString;
-  commits.dev-prefix.description = "Prefix of commit message for development dependencies";
-  commits.scope.default = false;
-  commits.scope.example = true;
-  commits.scope.type = lib.types.bool;
-  commits.scope.description = "If commit message should be contain scope";
-  commit.default = null;
-  commit.example.prefix = "RED-ALERT";
-  commit.example.prefix-dev = "warn";
-  commit.example.scope = true;
-  commit.type = lib.types.nullOr (submoduleOf commits);
-  commit.description = ''
-    Customize commit message prefix,
-    see [dependabot docs](${docs-url}#commit-message)
-  '';
+
   insecure-external-code-execution.default = null;
   insecure-external-code-execution.example = true;
   insecure-external-code-execution.type = lib.types.nullOr lib.types.bool;
@@ -141,40 +150,21 @@ let
     Deny or allow external code execution,
     see [github documentations](${docs-url}#insecure-external-code-execution)
   '';
-  labels.default = [];
-  labels.example = ["depencencies"];
-  labels.type = listOfNonEmptyStr;
-  labels.description = ''
-    Labels to be added in pull request
-    see [github documentations](${docs-url}#label)
+
+  intervals = ["daily" "weekly" "monthly"];
+  interval.default = "weekly";
+  interval.example = "monthly";
+  interval.type = lib.types.enum intervals;
+  interval.description = ''
+    Periodicity of check: ${toString intervals}
   '';
+
   milestoneId.default = null;
   milestoneId.example = 4;
   milestoneId.type = lib.types.nullOr lib.types.int;
   milestoneId.description = ''
     Id of milestone associated with
     see [github documentations](${docs-url}#milestone)
-  '';
-  limit.default = null;
-  limit.example = 5;
-  limit.type = lib.types.nullOr lib.types.int;
-  limit.description = ''
-    Maximum open pull requests before next update
-    see [github documentations](${docs-url}#open-pull-requests-limit)
-  '';
-  separator.example = "-";
-  separator.default = null;
-  separator.type = nullOrNonEmptyString;
-  separator.description = ''
-    branch name separator
-    see [github documentations](${docs-url}#pull-request-branch-nameseparator)
-  '';
-  auto-rebase.default = null;
-  auto-rebase.example = false;
-  auto-rebase.type = lib.types.nullOr lib.types.bool;
-  auto-rebase.description = ''
-    Disable auto rebase (enabled by default)
-    see [github documentations](${docs-url}#rebase-strategy)
   '';
 
   reviewers.default = [];
@@ -184,6 +174,15 @@ let
     List of developers to review
     see [github documentations](${docs-url}#reviewers)
   '';
+
+  separator.example = "-";
+  separator.default = null;
+  separator.type = nullOrNonEmptyString;
+  separator.description = ''
+    branch name separator
+    see [github documentations](${docs-url}#pull-request-branch-nameseparator)
+  '';
+
   target-branch.default = null;
   target-branch.example = "your-main-branch";
   target-branch.type = nullOrNonEmptyString;
@@ -191,6 +190,22 @@ let
     Branch to be target
     see [github documentations](${docs-url}#tarrget-branch)
   '';
+
+  time.default = null;
+  time.example = "16:25";
+  time.type = lib.types.nullOr (lib.types.strMatching "[0-2][0-9]:[0-5][0-9]");
+  time.description = ''
+    Time of day to check for updates (format: hh:mm)
+  '';
+
+  timezone.default = null;
+  timezone.example = "Asia/Tokyo";
+  timezone.type = nullOrNonEmptyString;
+  timezone.description = ''
+    Specify an time zone, time zone identifier is defined by
+    [iana](https://www.iana.org/time-zones)
+  '';
+
   vendor.default = false;
   vendor.example = true;
   vendor.type = lib.types.bool;
@@ -198,14 +213,16 @@ let
     tell Dependabot to vendor dependencies
     see [github documentations](${docs-url}#vendor)
   '';
+
   strategies = ["lockfile-only" "auto" "widen" "increase" "increase-if-necessary"];
   versioning-strategy.default = null;
   versioning-strategy.example = "auto";
   versioning-strategy.type = lib.types.nullOr (lib.types.enum strategies);
   versioning-strategy.description = ''
-    tell Dependabot to vendor dependencies
-    see [github documentations](${docs-url}#vendor)
+    Dependabot versioning strategy
+    see [github documentations](${docs-url}#versioning-strategy)
   '';
+
   updates = {
     inherit
       auto-rebase
