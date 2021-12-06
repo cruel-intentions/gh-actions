@@ -251,7 +251,7 @@ let
   gh-dependabot.description = ''
     Github dependabot configurations
 
-    config.gh-dependabot.&lt;packager&gt;."&lt;directory&gt;".interval = "&lt;interval&gt;";
+    gh-dependabot.&lt;packager&gt;."&lt;directory&gt;".interval = "&lt;interval&gt;";
 
     See [github documentations](${docs-url}#configuration-options-for-updates)
     of package-ecosystem directory and interval

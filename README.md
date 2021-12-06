@@ -106,7 +106,7 @@ This is a more complex example
   # 'ci-cd' is the name of genereted file
   # but we are free to change it
   # In previous example we named as 'tag-it'
-  config.gh-actions.ci-cd = {
+  gh-actions.ci-cd = {
     enable = true;
     # only run it on master and staging
     on.push.branches = ["master" "staging"];
@@ -135,8 +135,8 @@ This is a more complex example
   # nodejs needs to be available
   # But it could be ruby, python, rust...
   # See more 80.000 packages at https://search.nixos.org/packages
-  config.files.cmds.nodejs-14_x = true;
-  config.files.alias.push-to-s3 = ''
+  files.cmds.nodejs-14_x = true;
+  files.alias.push-to-s3 = ''
     # push to s3 bucket $1 if $2 match branch name
     echo $GITHUB_REF | grep -q $2 || exit 0
     echo deploy to $1

@@ -14,5 +14,5 @@ in
     ./templates/default/project.nix
     ./docs/book.nix
   ];
-  config.devshell.motd = "";
+  devshell.motd = "";
 }

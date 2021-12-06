@@ -88,6 +88,6 @@ let
 in
 { 
   imports = [ ./gh-actions-options.nix ];
-  config.files.alias = lib.foldAttrs lib.mergeAttrs {} aliasses;
-  config.files.yaml = lib.foldAttrs lib.mergeAttrs {} yamls;
+  files.alias = lib.foldAttrs lib.mergeAttrs {} aliasses;
+  files.yaml = lib.foldAttrs lib.mergeAttrs {} yamls;
 }

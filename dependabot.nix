@@ -72,7 +72,7 @@ let
 in
 {
   imports = [ ./dependabot-options.nix ];
-  config.files.yaml = hasAny cfg {
+  files.yaml = hasAny cfg {
     "/.github/dependabot.yml" = dependabot;
   };
 }
