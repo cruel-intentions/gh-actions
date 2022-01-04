@@ -12,6 +12,7 @@ in
     ./license.nix
     ./readme.nix
     ./templates/default/project.nix
+    ./templates/default/issues.nix
     ./docs/book.nix
     ./gh-form.nix
   ];

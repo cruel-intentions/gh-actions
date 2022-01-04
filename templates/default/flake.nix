@@ -11,10 +11,13 @@
 
     # Github Issue Forms YAML helper
     # "${inputs.gha}/gh-form.nix"
+    # your issues description
+    # ./issues.nix
 
     # Github Dependabot YAML helper
     # https://cruel-intentions.github.io/gh-actions/options-dependabot.html
     # "${inputs.gha}/dependabot.nix"
+
     ./project.nix
   ];
 }

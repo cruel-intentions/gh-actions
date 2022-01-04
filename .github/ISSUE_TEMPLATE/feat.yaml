@@ -1,0 +1,26 @@
+body:
+  - attributes:
+      label: Please fill following questions
+      options:
+        - label: Would you willing to pay
+    id: more-info
+    type: checkboxes
+  - attributes:
+      label: Describe your proposed solution
+    id: description
+    type: textarea
+    validations:
+      required: true
+  - attributes:
+      label: What problem this feature solve
+    id: problem
+    type: textarea
+  - attributes:
+      label: How you are overcomming this problem
+    id: some-alt
+    type: textarea
+description: Feature Request
+labels:
+  - feat
+name: feat
+title: 'feat: '

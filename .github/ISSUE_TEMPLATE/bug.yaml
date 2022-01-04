@@ -1,0 +1,31 @@
+body:
+  - attributes:
+      label: Please fill following questions
+      options:
+        - label: Is this bug critical for your workflow
+    id: more-info
+    type: checkboxes
+  - attributes:
+      description: What is happening
+      label: Actual Behavior
+    id: actual-behavior
+    type: textarea
+    validations:
+      required: true
+  - attributes:
+      description: What should happen
+      label: Expected Behavior
+    id: expected-behavior
+    type: textarea
+    validations:
+      required: true
+  - attributes:
+      description: Describe how to reproduce
+      label: How to reproduce
+    id: reproduce
+    type: textarea
+description: Report bugs
+labels:
+  - bug
+name: bug
+title: 'bug: '
