@@ -1,8 +1,16 @@
 body:
   - attributes:
-      label: Please fill following questions
+      label: Please anwser following questions
       options:
-        - label: Would you willing to pay
+        - label: Would you willing to open a PR?
+        - label: Would you willing to pay me a coffe for it?
+        - label: What about pizzas?
+        - label: Is your spiritual animal offended with previous question?
+        - label: Are your spiritual animal already working on it in your imagination?
+        - label: Are you wondering why I'm asking this questions?
+        - label: Are you asking yourself if you should give up of opening it?
+        - label: Isn't your eye bleeding yet?
+        - label: Should I add more of these questions?
     id: more-info
     type: checkboxes
   - attributes:
