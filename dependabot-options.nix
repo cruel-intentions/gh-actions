@@ -1,16 +1,11 @@
 { config, lib, ... }:
 let
   docs-url = "https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates";
-  optionsOf = opts: { options = builtins.mapAttrs (n: lib.mkOption) opts; };
-  submoduleOf = opts: lib.types.submodule (optionsOf opts);
-  boolOr = t: lib.types.oneOf [t lib.types.bool];
-  nullOrNonEmptyString = lib.types.nullOr lib.types.nonEmptyStr;
-  nonEmptyListOfNonEmptyStr = lib.types.nonEmptyListOf lib.types.nonEmptyStr;
-  listOfNonEmptyStr = lib.types.listOf lib.types.nonEmptyStr;
+  optsLib = import ./options-lib.nix { inherit lib; };
 
   assignees.default = [];
   assignees.example = ["jaoooooo"];
-  assignees.type = listOfNonEmptyStr;
+  assignees.type = optsLib.listOfNonEmptyStr;
   assignees.description = ''
     Who will be assigned to pull request
   '';
@@ -25,38 +20,38 @@ let
 
   allows.all.default = false;
   allows.all.example = ["express"];
-  allows.all.type = boolOr nonEmptyListOfNonEmptyStr;
+  allows.all.type = optsLib.boolOr optsLib.nonEmptyListOfNonEmptyStr;
   allows.all.description = ''
     All explicit and direct dependencies
   '';
   allows.direct.default = false;
   allows.direct.example = ["express"];
-  allows.direct.type = boolOr nonEmptyListOfNonEmptyStr;
+  allows.direct.type = optsLib.boolOr optsLib.nonEmptyListOfNonEmptyStr;
   allows.direct.description = ''
     All explicitly defined dependencies
   '';
   allows.indirect.default = false;
   allows.indirect.example = ["express"];
-  allows.indirect.type = boolOr nonEmptyListOfNonEmptyStr;
+  allows.indirect.type = optsLib.boolOr optsLib.nonEmptyListOfNonEmptyStr;
   allows.indirect.description = ''
     Dependencies of dependencies
   '';
   allows.production.default = false;
   allows.production.example = ["express"];
-  allows.production.type = boolOr nonEmptyListOfNonEmptyStr;
+  allows.production.type = optsLib.boolOr optsLib.nonEmptyListOfNonEmptyStr;
   allows.production.description = ''
     Dependencies for production
   '';
   allows.development.default = false;
   allows.development.example = ["express"];
-  allows.development.type = boolOr nonEmptyListOfNonEmptyStr;
+  allows.development.type = optsLib.boolOr optsLib.nonEmptyListOfNonEmptyStr;
   allows.development.description = ''
     Dependencies for development
   '';
   allow.default = null;
   allow.example.production = true;
   allow.example.development = ["sphinix"];
-  allow.type = lib.types.nullOr (submoduleOf allows);
+  allow.type = lib.types.nullOr (optsLib.submoduleOf allows);
   allow.description = ''
     Customize which dependencies are updated,
     see [dependabot docs](${docs-url}#allow)
@@ -67,7 +62,7 @@ let
   commits.prefix.description = "Prefix of commit message";
   commits.dev-prefix.default = null;
   commits.dev-prefix.example = "warn";
-  commits.dev-prefix.type = nullOrNonEmptyString;
+  commits.dev-prefix.type = optsLib.nullOrNonEmptyString;
   commits.dev-prefix.description = "Prefix of commit message for development dependencies";
   commits.scope.default = false;
   commits.scope.example = true;
@@ -77,7 +72,7 @@ let
   commit.example.prefix = "RED-ALERT";
   commit.example.prefix-dev = "warn";
   commit.example.scope = true;
-  commit.type = lib.types.nullOr (submoduleOf commits);
+  commit.type = lib.types.nullOr (optsLib.submoduleOf commits);
   commit.description = ''
     Customize commit message prefix,
     see [dependabot docs](${docs-url}#commit-message)
@@ -93,7 +88,7 @@ let
 
   labels.default = [];
   labels.example = ["depencencies"];
-  labels.type = listOfNonEmptyStr;
+  labels.type = optsLib.listOfNonEmptyStr;
   labels.description = ''
     Labels to be added in pull request
     see [github documentations](${docs-url}#label)
@@ -109,7 +104,7 @@ let
 
   ignores.versions.default = [];
   ignores.versions.example = ["5.x.x" "^4.0.0"];
-  ignores.versions.type = listOfNonEmptyStr;
+  ignores.versions.type = optsLib.listOfNonEmptyStr;
   ignores.versions.description = ''
     Versions to be ignored
   '';
@@ -137,7 +132,7 @@ let
   ignore.example.django.minor = true;
   ignore.example.django.major = true;
   ignore.example.express = true;
-  ignore.type = lib.types.attrsOf (boolOr (submoduleOf ignores));
+  ignore.type = lib.types.attrsOf (optsLib.boolOr (optsLib.submoduleOf ignores));
   ignore.description = ''
     Customize which dependencies are ignored,
     see [dependabot docs](#ignore)
@@ -169,7 +164,7 @@ let
 
   reviewers.default = [];
   reviewers.example = [ "your-user-name" "your-org/some-team" ];
-  reviewers.type = listOfNonEmptyStr;
+  reviewers.type = optsLib.listOfNonEmptyStr;
   reviewers.description = ''
     List of developers to review
     see [github documentations](${docs-url}#reviewers)
@@ -177,7 +172,7 @@ let
 
   separator.example = "-";
   separator.default = null;
-  separator.type = nullOrNonEmptyString;
+  separator.type = optsLib.nullOrNonEmptyString;
   separator.description = ''
     branch name separator
     see [github documentations](${docs-url}#pull-request-branch-nameseparator)
@@ -185,7 +180,7 @@ let
 
   target-branch.default = null;
   target-branch.example = "your-main-branch";
-  target-branch.type = nullOrNonEmptyString;
+  target-branch.type = optsLib.nullOrNonEmptyString;
   target-branch.description = ''
     Branch to be target
     see [github documentations](${docs-url}#tarrget-branch)
@@ -200,7 +195,7 @@ let
 
   timezone.default = null;
   timezone.example = "Asia/Tokyo";
-  timezone.type = nullOrNonEmptyString;
+  timezone.type = optsLib.nullOrNonEmptyString;
   timezone.description = ''
     Specify an time zone, time zone identifier is defined by
     [iana](https://www.iana.org/time-zones)
@@ -247,7 +242,7 @@ let
   gh-dependabot.default = {};
   gh-dependabot.example.npm = true;
   gh-dependabot.example.pip."/".interval = "weekly";
-  gh-dependabot.type = lib.types.attrsOf (lib.types.attrsOf (submoduleOf updates));
+  gh-dependabot.type = lib.types.attrsOf (lib.types.attrsOf (optsLib.submoduleOf updates));
   gh-dependabot.description = ''
     Github dependabot configurations
 
@@ -263,31 +258,31 @@ let
   '';
   registry.url.default = null;
   registry.url.example = "https://maven.pkg.github.com/your-org";
-  registry.url.type = nullOrNonEmptyString;
+  registry.url.type = optsLib.nullOrNonEmptyString;
   registry.url.description = ''
     url of registry
   '';
   registry.username.default = null;
   registry.username.example = "your-repo-login";
-  registry.username.type = nullOrNonEmptyString;
+  registry.username.type = optsLib.nullOrNonEmptyString;
   registry.username.description = ''
     username of registry
   '';
   registry.secret-name-pass.default = null;
   registry.secret-name-pass.example = "MY_ARTIFACTORY_PASSWORD";
-  registry.secret-name-pass.type = nullOrNonEmptyString;
+  registry.secret-name-pass.type = optsLib.nullOrNonEmptyString;
   registry.secret-name-pass.description = ''
     gitub sercret name of password to access registry
   '';
   registry.secret-name-key.default = null;
   registry.secret-name-key.example = "MY_ARTIFACTORY_KEY";
-  registry.secret-name-key.type = nullOrNonEmptyString;
+  registry.secret-name-key.type = optsLib.nullOrNonEmptyString;
   registry.secret-name-key.description = ''
     gitub sercret name of key to access registry
   '';
   registry.secret-name-token.default = null;
   registry.secret-name-token.example = "MY_ARTIFACTORY_TOKEN";
-  registry.secret-name-token.type = nullOrNonEmptyString;
+  registry.secret-name-token.type = optsLib.nullOrNonEmptyString;
   registry.secret-name-token.description = ''
     gitub sercret name of token to access registry
   '';
@@ -299,7 +294,7 @@ let
   '';
   registry.organization.default = null;
   registry.organization.example = "your-org";
-  registry.organization.type = nullOrNonEmptyString;
+  registry.organization.type = optsLib.nullOrNonEmptyString;
   registry.organization.description = ''
     organization name of login in registry
   '';
@@ -308,9 +303,9 @@ let
   gh-dependabot-registry.example.maven-github.url = "https://maven.pkg.github.com/your-org";
   gh-dependabot-registry.example.maven-github.username = "your-repo-login";
   gh-dependabot-registry.example.maven-github.secret-name = "MY_ARTIFACTORY_PASSWORD";
-  gh-dependabot-registry.type = lib.types.attrsOf (submoduleOf registry);
+  gh-dependabot-registry.type = lib.types.attrsOf (optsLib.submoduleOf registry);
   gh-dependabot-registry.description = ''
     Disable auto rebase (enabled by default)
     see [github documentations](${docs-url}#registries)
   '';
-in optionsOf { inherit gh-dependabot gh-dependabot-registry; }
+in optsLib.optionsOf { inherit gh-dependabot gh-dependabot-registry; }

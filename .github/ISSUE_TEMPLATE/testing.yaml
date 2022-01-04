@@ -1,0 +1,56 @@
+assignees:
+  - hugosenari
+body:
+  - attributes:
+      value: |
+        # Im a markdown
+
+        I will will be displayed at form page
+        I'm not intented to be filled by user, only displayed to user
+    type: markdown
+  - attributes:
+      description: to test gh forms inputs
+      label: some input
+      placeholder: Hold!!!
+      value: Valuable
+    id: some-input
+    type: input
+    validations:
+      required: true
+  - attributes:
+      description: test gh forms dropdown
+      label: some dropdowns
+      multiple: true
+      options:
+        - some other option
+    id: some-dropdown
+    type: dropdown
+    validations:
+      required: true
+  - attributes:
+      description: test gh forms checkboxes
+      label: some check
+      options:
+        - label: some option
+        - label: some required option
+          required: true
+    id: some-check
+    type: checkboxes
+    validations:
+      required: true
+  - attributes:
+      description: to test gh forms texts
+      label: some text
+      placeholder: some bash!!!
+      render: bash
+      value: |
+        echo "Hello World"
+    id: some-text
+    type: textarea
+    validations:
+      required: true
+description: Testing GH Form
+labels:
+  - testing
+name: testing
+title: 'testing: '

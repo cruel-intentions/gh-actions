@@ -13,6 +13,8 @@ in
     ./readme.nix
     ./templates/default/project.nix
     ./docs/book.nix
+    ./gh-form.nix
   ];
   devshell.motd = "";
+  gh-form = import ./.github/form.nix;
 }
