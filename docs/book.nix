@@ -22,9 +22,11 @@ in
 
   files.text."/gh-pages/src/about.md" = builtins.readFile ./about.md;
   files.text."/gh-pages/src/usage.md" = builtins.readFile ./usage.md;
+  files.text."/gh-pages/src/see-also.md" = builtins.readFile ./see-also.md;
   files.text."/gh-pages/src/examples.md" = builtins.import ./examples.nix;
   files.docs."/gh-pages/src/options.md".modules = [ ../gh-actions-options.nix ];
   files.docs."/gh-pages/src/options-dependabot.md".modules = [ ../dependabot-options.nix ];
+  files.docs."/gh-pages/src/options-gh-form.md".modules = [ ../gh-form.nix ];
   files.gitignore.pattern."gh-pages" = true;
   gh-actions.gh-pages.enable = true;
   gh-actions.gh-pages.build = ''publish-as-gh-pages'';
