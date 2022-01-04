@@ -21,8 +21,8 @@
       exit 0
     fi
 
-    NEXT=`echo $LOGS | grep -q "feat" && echo MINOR || echo $NEXT`
-    NEXT=`echo $LOGS | grep -q "!:"   && echo MAJOR || echo $NEXT`
+    NEXT=`echo $LOGS | grep -q "feat" && echo $MINOR || echo $NEXT`
+    NEXT=`echo $LOGS | grep -q "!:"   && echo $MAJOR || echo $NEXT`
 
     git tag v$NEXT
 
