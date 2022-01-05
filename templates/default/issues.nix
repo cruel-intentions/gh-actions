@@ -3,7 +3,7 @@ let
     "Would you willing to pay me a coffe for it?"
     "What about pizzas?"
     "Is your spiritual animal offended with previous question?"
-    "Are your spiritual animal already working on it in your imagination?"
+    "Is your spiritual animal already working on it in your head?"
     "Are you wondering why I'm asking this questions?"
     "Are you asking yourself if you should give up of opening it?"
     "Isn't your eye bleeding yet?"
