@@ -139,15 +139,22 @@ This is a more complex example
       push-to-s3 my-production-s3-bucket master
     '';
     # deploy needs AWS S3 credentials
-    env.deploy.AWS_ACCESS_KEY_ID = ''${"$"}{{ secrets.AWS_ACCESS_KEY_ID} }}'';
-    env.deploy.AWS_SECRET_ACCESS_KEY = ''${"$"}{{ secrets.AWS_SECRET_ACCESS_KEY }}'';
-    env.deploy.AWS_DEFAULT_REGION = ''${"$"}{{ secrets.AWS_DEFAULT_REGION }}'';
+    env.deploy.AWS_ACCESS_KEY_ID     = "\${{ secrets.AWS_ACCESS_KEY_ID} }}";
+    env.deploy.AWS_SECRET_ACCESS_KEY = "\${{ secrets.AWS_SECRET_ACCESS_KEY }}";
+    env.deploy.AWS_DEFAULT_REGION    = "\${{ secrets.AWS_DEFAULT_REGION }}";
     # create tag after deploy if master branch
     post-deploy = ''
       echo $GITHUB_REF | grep -q "master" || exit 0
       git tag v$(convco version --bump)
       git push --tag
     '';
+    # We could also configure Cachix
+    # https://www.cachix.org/
+    cache.name = "yourCacheName";
+    # git hub secret with cache token
+    # cache.token-name = "CACHIX_AUTH_TOKEN"  # default value
+    # git hub secret with cache signing key
+    # cache.key-name   = null                 # default value
   };
   # nodejs needs to be available
   # But it could be ruby, python, rust...
