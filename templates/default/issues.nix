@@ -1,13 +1,13 @@
 let 
   useless = [
-    "Would you willing to pay me a coffe for it?"
+    "Would you be willing to pay me a coffe for it?"
     "What about pizzas?"
     "Is your spiritual animal offended with previous question?"
     "Is your spiritual animal already working on it in your head?"
-    "Are you wondering why I'm asking this questions?"
+    "Are you wondering why I'm asking these questions?"
     "Are you asking yourself if you should give up of opening it?"
     "Isn't your eye bleeding yet?"
-    "Should I add more of these questions?"
+    "Should I add more questions?"
   ];
 in
 {
@@ -33,7 +33,7 @@ in
   gh-form.feat.text.problem.label = "What problem this feature solve";
   gh-form.feat.text.description.label = "Describe your proposed solution";
   gh-form.feat.text.description.required = true;
-  gh-form.feat.text.some-alt.label = "How you are overcomming this problem";
+  gh-form.feat.text.some-alt.label = "How you are overcoming this problem";
   gh-form.feat.checkboxes.more-info.label = "Please anwser following questions";
   gh-form.feat.checkboxes.more-info.options = [
     "Would you willing to open a PR?"

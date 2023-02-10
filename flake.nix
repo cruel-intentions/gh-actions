@@ -6,7 +6,7 @@
   outputs = inputs:
   let
     shell = inputs.dsf.lib.mkShell [ ./project.nix ];
-    templates.defaultTemplate.path = ./templates/default;
-    templates.defaultTemplate.description = "nix flake new -t github:cruel-intentions/gh-actions project";
-  in shell // templates;
+    templates.default.path = ./templates/default;
+    templates.default.description = "nix flake new -t github:cruel-intentions/gh-actions project";
+  in shell // { inherit templates; };
 }

@@ -3,14 +3,14 @@ body:
       label: Please anwser following questions
       options:
         - label: Would you willing to open a PR?
-        - label: Would you willing to pay me a coffe for it?
+        - label: Would you be willing to pay me a coffe for it?
         - label: What about pizzas?
         - label: Is your spiritual animal offended with previous question?
         - label: Is your spiritual animal already working on it in your head?
-        - label: Are you wondering why I'm asking this questions?
+        - label: Are you wondering why I'm asking these questions?
         - label: Are you asking yourself if you should give up of opening it?
         - label: Isn't your eye bleeding yet?
-        - label: Should I add more of these questions?
+        - label: Should I add more questions?
     id: more-info
     type: checkboxes
   - attributes:
@@ -24,7 +24,7 @@ body:
     id: problem
     type: textarea
   - attributes:
-      label: How you are overcomming this problem
+      label: How you are overcoming this problem
     id: some-alt
     type: textarea
 description: Feature Request
