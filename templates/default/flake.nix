@@ -1,8 +1,12 @@
 {
   description = "Dev Environment";
 
-  inputs.dsf.url = "github:cruel-intentions/devshell-files";
-  inputs.gha.url = "github:cruel-intentions/gh-actions";
+  inputs.nixpkgs.url = "nixpkgs/nixos-22.11";
+  inputs.dsf.url     = "github:cruel-intentions/devshell-files";
+  inputs.gha.url     = "github:cruel-intentions/gh-actions";
+  inputs.dsf.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.gha.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.gha.inputs.dsf.follows     = "dsf";
 
   outputs = inputs: inputs.dsf.lib.mkShell [
     # Github Actions YAML helper

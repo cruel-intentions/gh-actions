@@ -1,4 +1,5 @@
-{ 
+{
+  packages = ["convco"];
   # actions are disable by default, enable it (required)
   gh-actions.tag-me.enable = true;
   # there are 5 optional configurable steps
@@ -8,8 +9,8 @@
     # tag this project on push to master
     # this is a bash script
 
-    CURR=`convco version`
-    NEXT=`convco version --bump`
+    CURR=`convco  version`
+    NEXT=`convco  version --bump`
     MAJOR=`convco version --bump --major`
     MINOR=`convco version --bump --minor`
     PATCH=`convco version --bump --patch`
