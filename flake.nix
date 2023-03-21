@@ -1,7 +1,9 @@
 {
   description = "Dev Environment";
 
-  inputs.dsf.url = "github:cruel-intentions/devshell-files";
+  inputs.nixpkgs.url = "nixpkgs/nixos-22.11";
+  inputs.dsf.url     = "github:cruel-intentions/devshell-files";
+  inputs.dsf.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs = inputs:
   let

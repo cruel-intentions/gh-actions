@@ -44,7 +44,8 @@ The most basic example is used by this project to tag it
 
 ```nix
 # project.nix
-{ 
+{
+  packages = ["convco"];
   # actions are disable by default, enable it (required)
   gh-actions.tag-me.enable = true;
   # there are 5 optional configurable steps
@@ -54,8 +55,8 @@ The most basic example is used by this project to tag it
     # tag this project on push to master
     # this is a bash script
 
-    CURR=`convco version`
-    NEXT=`convco version --bump`
+    CURR=`convco  version`
+    NEXT=`convco  version --bump`
     MAJOR=`convco version --bump --major`
     MINOR=`convco version --bump --minor`
     PATCH=`convco version --bump --patch`
