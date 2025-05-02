@@ -30,11 +30,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746215688,
-        "narHash": "sha256-VfMRer0vd5+JtCTxFx0Q3J+8kPZE4af5Sn9zKQX1uwk=",
+        "lastModified": 1746222566,
+        "narHash": "sha256-22pjji7pg9dR8kKZggwZt1Oc9BMpWr6DU+um63t3ALk=",
         "owner": "cruel-intentions",
         "repo": "devshell-files",
-        "rev": "ec37f4f4a61be21234d3d9a324a154fd54e4c060",
+        "rev": "7018e1e73a996ce1c50afb3fd83e700ebce07a23",
         "type": "github"
       },
       "original": {
@@ -51,11 +51,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1686726260,
-        "narHash": "sha256-DYlY4MMqy5D7pKBWs7AHFRbwak/2/4lRhfWRt2giqEE=",
+        "lastModified": 1746217342,
+        "narHash": "sha256-x+ZudbvqNZqR+2sibZ/IDeLMjR7JV8vfEkzwK5xfFXk=",
         "owner": "cruel-intentions",
         "repo": "flu-type-a",
-        "rev": "c0abd599a2dcb3c260b092b61d96839faed16c39",
+        "rev": "4f7666d4731d5c140f5ad3dcc4c3a3aa7af82b52",
         "type": "github"
       },
       "original": {
