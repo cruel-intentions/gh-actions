@@ -14,7 +14,7 @@ let
     else cfg.ssh;
     needs-ssh-key = arrOfIfAttr sshInfo {
       name   = "Install SSH Key";
-      uses   = "shimataro/ssh-key-action@3c9b0fc6f2d223b8450b02a0445f526350fc73e0";
+      uses   = "shimataro/ssh-key-action@d4fffb50872869abe2d9a9098a6d9c5aa7d16be4";
       "with" = sshInfo;
     };
     cmd      = step: "nix develop --command gh-actions-${step}";
@@ -45,11 +45,11 @@ let
       env  = env-vars cfg.env.post-deploy;
     };
     checkout = [{
-      uses = "actions/checkout@v2.4.0";
+      uses = "actions/checkout@v4";
       "with".fetch-depth = 0;
     }];
     install-cachix = arrOfIf (cfg.cache != null) {
-      uses = "cachix/cachix-action@v10";
+      uses = "cachix/cachix-action@v16";
       "with".name       = cfg.cache.name;
       "with".signingKey = lib.mkIf (cfg.cache.key-name != null) 
         "\${{ secrets.${cfg.cache.key-name} }}";
@@ -57,8 +57,8 @@ let
         "\${{ secrets.${cfg.cache.token-name} }}";
     };
     install-nix = [{ 
-      uses = "cachix/install-nix-action@v15";
-      "with".nix_path         = "channel:nixos-22.05";
+      uses = "cachix/install-nix-action@v31";
+      "with".nix_path         = "channel:nixos-24.05";
       "with".extra_nix_config = "access-tokens = github.com=\${{ secrets.GITHUB_TOKEN }}";
     }];
   in
