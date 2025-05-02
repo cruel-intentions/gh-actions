@@ -1,7 +1,6 @@
 {
-  description = "Dev Environment";
-
-  inputs.nixpkgs.url = "nixpkgs/nixos-22.11";
+  description = "gh-actions";
+  inputs.nixpkgs.url = "nixpkgs/nixos-24.05";
   inputs.dsf.url     = "github:cruel-intentions/devshell-files";
   inputs.dsf.inputs.nixpkgs.follows = "nixpkgs";
 
