@@ -100,8 +100,7 @@ jobs:
         uses: actions/cache@v4
         with:
           key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
-          path:
-            - ~/.cache/nix
+          path: ~/.cache/nix
       - uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
