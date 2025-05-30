@@ -1,0 +1,40 @@
+body:
+  - attributes:
+      label: Please awnser following questions
+      options:
+        - label: Is this bug critical for your workflow?
+        - label: Would you willing to open a PR?
+        - label: Would you be willing to pay me a coffe for it?
+        - label: What about pizzas?
+        - label: Is your spiritual animal offended with previous question?
+        - label: Is your spiritual animal already working on it in your head?
+        - label: Are you wondering why I'm asking these questions?
+        - label: Are you asking yourself if you should give up of opening it?
+        - label: Isn't your eye bleeding yet?
+        - label: Should I add more questions?
+    id: more-info
+    type: checkboxes
+  - attributes:
+      description: What is happening
+      label: Actual Behavior
+    id: actual-behavior
+    type: textarea
+    validations:
+      required: true
+  - attributes:
+      description: What should happen
+      label: Expected Behavior
+    id: expected-behavior
+    type: textarea
+    validations:
+      required: true
+  - attributes:
+      description: Describe how to reproduce
+      label: How to reproduce
+    id: reproduce
+    type: textarea
+description: Report bugs
+labels:
+  - bug
+name: bug
+title: 'bug: '

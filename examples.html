@@ -1,0 +1,345 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Examples</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="about.html"><strong aria-hidden="true">1.</strong> About</a></li><li class="chapter-item expanded "><a href="usage.html"><strong aria-hidden="true">2.</strong> Usage</a></li><li class="chapter-item expanded "><a href="examples.html" class="active"><strong aria-hidden="true">3.</strong> Examples</a></li><li class="chapter-item expanded "><a href="options.html"><strong aria-hidden="true">4.</strong> GH Actions Options</a></li><li class="chapter-item expanded "><a href="options-gh-form.html"><strong aria-hidden="true">5.</strong> GH Forms Options</a></li><li class="chapter-item expanded "><a href="options-dependabot.html"><strong aria-hidden="true">6.</strong> Dependabot Options</a></li><li class="chapter-item expanded "><a href="see-also.html"><strong aria-hidden="true">7.</strong> See also</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<h4 id="basic"><a class="header" href="#basic">Basic</a></h4>
+<p>The most basic example is used by this project to tag it</p>
+<pre><code class="language-nix"># project.nix
+{
+  packages = ["convco"];
+  # actions are disable by default, enable it (required)
+  gh-actions.tag-me.enable = true;
+  # there are 5 optional configurable steps
+  # pre-build, build, test, deploy, post-deploy
+  # only defined steps goes to yaml file
+  gh-actions.tag-me.build = ''
+    # tag this project on push to master
+    # this is a bash script
+
+    CURR=`convco  version`
+    NEXT=`convco  version --bump`
+    MAJOR=`convco version --bump --major`
+    MINOR=`convco version --bump --minor`
+    PATCH=`convco version --bump --patch`
+
+    LOGS=`git log v$CURR..HEAD --format=oneline|cut -d' ' -f2`
+    if echo $CURR|grep -q $NEXT; then
+      echo "no reason to update tag" $CURR 
+      git log v$CURR..HEAD --format=oneline
+      exit 0
+    fi
+
+    NEXT=`echo $LOGS | grep -q "feat" &amp;&amp; echo $MINOR || echo $NEXT`
+    NEXT=`echo $LOGS | grep -q "!:"   &amp;&amp; echo $MAJOR || echo $NEXT`
+
+    git tag v$NEXT
+
+    git push --tag
+  '';
+  # Configure github cache
+  gh-actions.tag-me.gha-cache.name = "Cache";
+}
+
+</code></pre>
+<details>
+<summary>It generate our .github/workflows/tag-me.yaml (click to expand)</summary>
+<br>
+<pre><code class="language-yaml"># .github/workflows/tag-me.yaml
+jobs:
+  tag-me:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: cache
+        name: Cache
+        uses: actions/cache@v4
+        with:
+          key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          path: ~/.cache/nix
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+          nix_path: channel:nixos-24.05
+      - name: Build
+        run: nix develop --command gh-actions-tag-me-build
+"on":
+  push:
+    branches:
+      - master
+
+</code></pre>
+</details>
+<p>We should commit this yaml file because github can only read commited yaml files.</p>
+<h4 id="complex"><a class="header" href="#complex">Complex</a></h4>
+<p>This is a more complex example</p>
+<pre><code class="language-nix"># examples/nodejs.nix
+{
+  packages = ["awscli" "convco" "nodejs"];
+  # 'ci-cd' is the name of genereted file
+  # but we are free to change it
+  # In previous example we named as 'tag-it'
+  gh-actions.ci-cd.enable           = true;
+  gh-actions.ci-cd.on.push.branches = ["master" "staging"]; # only run it on master and staging
+  gh-actions.ci-cd.on.push.paths    = ["src/**/*.js"];      # only run it if JS change
+  gh-actions.ci-cd.pre-build        = "npm install";        # install dependencies
+  gh-actions.ci-cd.build            = "npm run build";      # build our site
+  gh-actions.ci-cd.deploy           = ''
+    push-to-s3 my-staging-s3-bucket staging
+    push-to-s3 my-production-s3-bucket master
+  '';                                                       # deploy you static site
+  # my needs AWS S3 credentials
+  gh-actions.ci-cd.env.deploy.AWS_ACCESS_KEY_ID     = "\${{ secrets.AWS_ACCESS_KEY_ID     }}";
+  gh-actions.ci-cd.env.deploy.AWS_SECRET_ACCESS_KEY = "\${{ secrets.AWS_SECRET_ACCESS_KEY }}";
+  gh-actions.ci-cd.env.deploy.AWS_DEFAULT_REGION    = "\${{ secrets.AWS_DEFAULT_REGION    }}";
+  # create tag after deploy if master branch
+  gh-actions.ci-cd.post-deploy = ''
+    echo $GITHUB_REF | grep -q "master" || exit 0
+    git tag v$(convco version --bump)
+    git push --tag
+  '';
+  # We could also configure Cachix
+  # https://www.cachix.org/
+  gh-actions.ci-cd.cache.name = "yourCacheName";
+  # git hub secret with cache token
+  # gh-actions.ci-cd.cache.token-name = "CACHIX_AUTH_TOKEN"  # default value
+  # git hub secret with cache signing key
+  # gh-actions.ci-cd.cache.key-name   = null                 # default value
+  # nodejs needs to be available
+  # But it could be ruby, python, rust...
+  # See more 80.000 packages at https://search.nixos.org/packages
+  files.alias.push-to-s3 = ''
+    # push to s3 bucket $1 if $2 match branch name
+    echo $GITHUB_REF | grep -q $2 || exit 0
+    echo deploy to $1
+    aws s3 sync build s3://$1 --acl public-read --delete
+  '';
+}
+
+
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="usage.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="options.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="usage.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="options.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

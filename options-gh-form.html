@@ -1,0 +1,805 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>GH Forms Options</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="about.html"><strong aria-hidden="true">1.</strong> About</a></li><li class="chapter-item expanded "><a href="usage.html"><strong aria-hidden="true">2.</strong> Usage</a></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">3.</strong> Examples</a></li><li class="chapter-item expanded "><a href="options.html"><strong aria-hidden="true">4.</strong> GH Actions Options</a></li><li class="chapter-item expanded "><a href="options-gh-form.html" class="active"><strong aria-hidden="true">5.</strong> GH Forms Options</a></li><li class="chapter-item expanded "><a href="options-dependabot.html"><strong aria-hidden="true">6.</strong> Dependabot Options</a></li><li class="chapter-item expanded "><a href="see-also.html"><strong aria-hidden="true">7.</strong> See also</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="gh-form"><a class="header" href="#gh-form">gh-form</a></h2>
+<p><para>Disable auto rebase (enabled by default)
+see <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms#registries">github documentations</a></para></p>
+<h4 id="type"><a class="header" href="#type">type</a></h4>
+<p>attribute set of (submodule)</p>
+<h4 id="example"><a class="header" href="#example">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form = {
+    testing = {
+      assignees = [
+        "hugosenari"
+      ];
+      checkboxes = {
+        some-check = {
+          description = "test gh forms checkboxes";
+          label = "some check";
+          options = [
+            "some option"
+          ];
+          required = true;
+          required-options = [
+            "some required option"
+          ];
+        };
+      };
+      description = "Testing GH Form";
+      dropdown = {
+        some-dropdown = {
+          description = "test gh forms dropdown";
+          label = "some dropdowns";
+          multiple = true;
+          options = [
+            "some other option"
+          ];
+          required = true;
+        };
+      };
+      input = {
+        some-input = {
+          description = "to test gh forms inputs";
+          label = "some input";
+          placeholder = "Hold!!!";
+          required = true;
+          value = "Valuable";
+        };
+      };
+      labels = [
+        "testing"
+      ];
+      markdown = {
+        some-markdown = {
+          value = ''
+            # Im a markdown
+            
+            I will will be displayed at form page
+            I'm not intented to be filled by user, only displayed to user
+          '';
+        };
+      };
+      text = {
+        some-text = {
+          description = "to test gh forms texts";
+          label = "some text";
+          placeholder = "some bash!!!";
+          render = "bash";
+          required = true;
+          value = ''
+            echo "Hello World"
+          '';
+        };
+      };
+      title = "testing: ";
+    };
+  };
+}
+</code></pre>
+<h4 id="default"><a class="header" href="#default">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form = { };
+}
+</code></pre>
+<h2 id="gh-formnameassignees"><a class="header" href="#gh-formnameassignees">gh-form.&lt;name&gt;.assignees</a></h2>
+<p><para>List of assignees to this kind of issue</p>
+<p>see <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms#top-level-syntax">github documentations</a></para></p>
+<h4 id="type-1"><a class="header" href="#type-1">type</a></h4>
+<p>list of non-empty string</p>
+<h4 id="example-1"><a class="header" href="#example-1">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.assignees = [
+    "hugosenari"
+  ];
+}
+</code></pre>
+<h4 id="default-1"><a class="header" href="#default-1">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.assignees = [ ];
+}
+</code></pre>
+<h2 id="gh-formnamecheckboxes"><a class="header" href="#gh-formnamecheckboxes">gh-form.&lt;name&gt;.checkboxes</a></h2>
+<p><para>Github forms body dropdown fields</p>
+<p>gh-forms.&lt;file-name&gt;.checkboxes.&lt;field-id&gt;.label = "&lt;label&gt;";
+gh-forms.&lt;file-name&gt;.checkboxes.&lt;field-id&gt;.description = "&lt;description&gt;";</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#checkboxes">github documentations</a></para></p>
+<h4 id="type-2"><a class="header" href="#type-2">type</a></h4>
+<p>attribute set of (submodule)</p>
+<h4 id="example-2"><a class="header" href="#example-2">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.checkboxes = {
+    agreement = {
+      description = "Check to confirm";
+      label = "Are you sure?";
+    };
+  };
+}
+</code></pre>
+<h4 id="default-2"><a class="header" href="#default-2">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.checkboxes = { };
+}
+</code></pre>
+<h2 id="gh-formnamecheckboxesnamedescription"><a class="header" href="#gh-formnamecheckboxesnamedescription">gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.description</a></h2>
+<p><para>Description of checkboxes input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#checkboxes">github documentations</a></para></p>
+<h4 id="type-3"><a class="header" href="#type-3">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-3"><a class="header" href="#example-3">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.description = "Confirm this checking";
+}
+</code></pre>
+<h4 id="default-3"><a class="header" href="#default-3">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.description = null;
+}
+</code></pre>
+<h2 id="gh-formnamecheckboxesnamelabel"><a class="header" href="#gh-formnamecheckboxesnamelabel">gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.label</a></h2>
+<p><para>Label of checkboxes input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#checkboxes">github documentations</a></para></p>
+<h4 id="type-4"><a class="header" href="#type-4">type</a></h4>
+<p>non-empty string</p>
+<h4 id="example-4"><a class="header" href="#example-4">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.label = "Are you sure?";
+}
+</code></pre>
+<h2 id="gh-formnamecheckboxesnameoptions"><a class="header" href="#gh-formnamecheckboxesnameoptions">gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.options</a></h2>
+<p><para>Values that can be checked</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#checkboxes">github documentations</a></para></p>
+<h4 id="type-5"><a class="header" href="#type-5">type</a></h4>
+<p>list of non-empty string</p>
+<h4 id="example-5"><a class="header" href="#example-5">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.options = [
+    "spam me"
+  ];
+}
+</code></pre>
+<h4 id="default-4"><a class="header" href="#default-4">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.options = [ ];
+}
+</code></pre>
+<h2 id="gh-formnamecheckboxesnamerequired"><a class="header" href="#gh-formnamecheckboxesnamerequired">gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.required</a></h2>
+<p><para>If this text input is required</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#dropdown">github documentations</a></para></p>
+<h4 id="type-6"><a class="header" href="#type-6">type</a></h4>
+<p>boolean</p>
+<h4 id="example-6"><a class="header" href="#example-6">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.required = true;
+}
+</code></pre>
+<h4 id="default-5"><a class="header" href="#default-5">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.required = false;
+}
+</code></pre>
+<h2 id="gh-formnamecheckboxesnamerequired-options"><a class="header" href="#gh-formnamecheckboxesnamerequired-options">gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.required-options</a></h2>
+<p><para>Values that can be checked that need to be checked</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#checkboxes">github documentations</a></para></p>
+<h4 id="type-7"><a class="header" href="#type-7">type</a></h4>
+<p>list of non-empty string</p>
+<h4 id="example-7"><a class="header" href="#example-7">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.required-options = [
+    "I'm sure"
+  ];
+}
+</code></pre>
+<h4 id="default-6"><a class="header" href="#default-6">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.checkboxes.&lt;name&gt;.required-options = [ ];
+}
+</code></pre>
+<h2 id="gh-formnamedescription"><a class="header" href="#gh-formnamedescription">gh-form.&lt;name&gt;.description</a></h2>
+<p><para>A description for the issue form template</p>
+<p>see <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms#top-level-syntax">github documentations</a></para></p>
+<h4 id="type-8"><a class="header" href="#type-8">type</a></h4>
+<p>non-empty string</p>
+<h4 id="example-8"><a class="header" href="#example-8">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.description = "File a bug report";
+}
+</code></pre>
+<h2 id="gh-formnamedropdown"><a class="header" href="#gh-formnamedropdown">gh-form.&lt;name&gt;.dropdown</a></h2>
+<p><para>Github forms body dropdown fields</p>
+<p>gh-forms.&lt;file-name&gt;.dropdown.&lt;field-id&gt;.label = "&lt;label&gt;";
+gh-forms.&lt;file-name&gt;.dropdown.&lt;field-id&gt;.description = "&lt;description&gt;";</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#dropdown">github documentations</a></para></p>
+<h4 id="type-9"><a class="header" href="#type-9">type</a></h4>
+<p>attribute set of (submodule)</p>
+<h4 id="example-9"><a class="header" href="#example-9">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.dropdown = {
+    greeting-type = {
+      description = "Types of greeting message";
+      label = "Greeting type";
+    };
+  };
+}
+</code></pre>
+<h4 id="default-7"><a class="header" href="#default-7">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.dropdown = { };
+}
+</code></pre>
+<h2 id="gh-formnamedropdownnamedescription"><a class="header" href="#gh-formnamedropdownnamedescription">gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.description</a></h2>
+<p><para>Description of dropdown input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#dropdown">github documentations</a></para></p>
+<h4 id="type-10"><a class="header" href="#type-10">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-10"><a class="header" href="#example-10">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.description = "Type of greeting message";
+}
+</code></pre>
+<h4 id="default-8"><a class="header" href="#default-8">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.description = null;
+}
+</code></pre>
+<h2 id="gh-formnamedropdownnamelabel"><a class="header" href="#gh-formnamedropdownnamelabel">gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.label</a></h2>
+<p><para>Label of dropdown input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#dropdown">github documentations</a></para></p>
+<h4 id="type-11"><a class="header" href="#type-11">type</a></h4>
+<p>non-empty string</p>
+<h4 id="example-11"><a class="header" href="#example-11">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.label = "Greeting type";
+}
+</code></pre>
+<h2 id="gh-formnamedropdownnamemultiple"><a class="header" href="#gh-formnamedropdownnamemultiple">gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.multiple</a></h2>
+<p><para>If more than one could be selected</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#dropdown">github documentations</a></para></p>
+<h4 id="type-12"><a class="header" href="#type-12">type</a></h4>
+<p>boolean</p>
+<h4 id="example-12"><a class="header" href="#example-12">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.multiple = true;
+}
+</code></pre>
+<h4 id="default-9"><a class="header" href="#default-9">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.multiple = false;
+}
+</code></pre>
+<h2 id="gh-formnamedropdownnameoptions"><a class="header" href="#gh-formnamedropdownnameoptions">gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.options</a></h2>
+<p><para>Values that can be selected</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#dropdown">github documentations</a></para></p>
+<h4 id="type-13"><a class="header" href="#type-13">type</a></h4>
+<p>list of non-empty string</p>
+<h4 id="example-13"><a class="header" href="#example-13">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.options = [
+    "birthday"
+    "new-year"
+  ];
+}
+</code></pre>
+<h2 id="gh-formnamedropdownnamerequired"><a class="header" href="#gh-formnamedropdownnamerequired">gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.required</a></h2>
+<p><para>If this dropdown input is required</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#dropdown">github documentations</a></para></p>
+<h4 id="type-14"><a class="header" href="#type-14">type</a></h4>
+<p>boolean</p>
+<h4 id="example-14"><a class="header" href="#example-14">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.required = true;
+}
+</code></pre>
+<h4 id="default-10"><a class="header" href="#default-10">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.dropdown.&lt;name&gt;.required = false;
+}
+</code></pre>
+<h2 id="gh-formnameinput"><a class="header" href="#gh-formnameinput">gh-form.&lt;name&gt;.input</a></h2>
+<p><para>Github forms body input fields</p>
+<p>gh-forms.&lt;file-name&gt;.input.&lt;field-id&gt;.label = "&lt;label&gt;";
+gh-forms.&lt;file-name&gt;.input.&lt;field-id&gt;.description = "&lt;description&gt;";</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#input">github documentations</a></para></p>
+<h4 id="type-15"><a class="header" href="#type-15">type</a></h4>
+<p>attribute set of (submodule)</p>
+<h4 id="example-15"><a class="header" href="#example-15">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.input = {
+    frequency = {
+      description = "How many times it happens";
+      label = "Frequency";
+    };
+  };
+}
+</code></pre>
+<h4 id="default-11"><a class="header" href="#default-11">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.input = { };
+}
+</code></pre>
+<h2 id="gh-formnameinputnamedescription"><a class="header" href="#gh-formnameinputnamedescription">gh-form.&lt;name&gt;.input.&lt;name&gt;.description</a></h2>
+<p><para>Description of input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#input">github documentations</a></para></p>
+<h4 id="type-16"><a class="header" href="#type-16">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-16"><a class="header" href="#example-16">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.input.&lt;name&gt;.description = "How many times it happens";
+}
+</code></pre>
+<h4 id="default-12"><a class="header" href="#default-12">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.input.&lt;name&gt;.description = null;
+}
+</code></pre>
+<h2 id="gh-formnameinputnamelabel"><a class="header" href="#gh-formnameinputnamelabel">gh-form.&lt;name&gt;.input.&lt;name&gt;.label</a></h2>
+<p><para>Label of input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#input">github documentations</a></para></p>
+<h4 id="type-17"><a class="header" href="#type-17">type</a></h4>
+<p>non-empty string</p>
+<h4 id="example-17"><a class="header" href="#example-17">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.input.&lt;name&gt;.label = "Frequency";
+}
+</code></pre>
+<h2 id="gh-formnameinputnameplaceholder"><a class="header" href="#gh-formnameinputnameplaceholder">gh-form.&lt;name&gt;.input.&lt;name&gt;.placeholder</a></h2>
+<p><para>Placeholder for input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#input">github documentations</a></para></p>
+<h4 id="type-18"><a class="header" href="#type-18">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-18"><a class="header" href="#example-18">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.input.&lt;name&gt;.placeholder = "every 5 days";
+}
+</code></pre>
+<h4 id="default-13"><a class="header" href="#default-13">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.input.&lt;name&gt;.placeholder = null;
+}
+</code></pre>
+<h2 id="gh-formnameinputnamerequired"><a class="header" href="#gh-formnameinputnamerequired">gh-form.&lt;name&gt;.input.&lt;name&gt;.required</a></h2>
+<p><para>If this input is required</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#input">github documentations</a></para></p>
+<h4 id="type-19"><a class="header" href="#type-19">type</a></h4>
+<p>boolean</p>
+<h4 id="example-19"><a class="header" href="#example-19">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.input.&lt;name&gt;.required = true;
+}
+</code></pre>
+<h4 id="default-14"><a class="header" href="#default-14">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.input.&lt;name&gt;.required = false;
+}
+</code></pre>
+<h2 id="gh-formnameinputnamevalue"><a class="header" href="#gh-formnameinputnamevalue">gh-form.&lt;name&gt;.input.&lt;name&gt;.value</a></h2>
+<p><para>Default value for input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#input">github documentations</a></para></p>
+<h4 id="type-20"><a class="header" href="#type-20">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-20"><a class="header" href="#example-20">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.input.&lt;name&gt;.value = "11 times in a week";
+}
+</code></pre>
+<h4 id="default-15"><a class="header" href="#default-15">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.input.&lt;name&gt;.value = null;
+}
+</code></pre>
+<h2 id="gh-formnamelabels"><a class="header" href="#gh-formnamelabels">gh-form.&lt;name&gt;.labels</a></h2>
+<p><para>Labels to this kind of issue</p>
+<p>see <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms#top-level-syntax">github documentations</a></para></p>
+<h4 id="type-21"><a class="header" href="#type-21">type</a></h4>
+<p>list of non-empty string</p>
+<h4 id="example-21"><a class="header" href="#example-21">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.labels = [
+    "bug"
+    "critical"
+  ];
+}
+</code></pre>
+<h4 id="default-16"><a class="header" href="#default-16">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.labels = [ ];
+}
+</code></pre>
+<h2 id="gh-formnamemarkdown"><a class="header" href="#gh-formnamemarkdown">gh-form.&lt;name&gt;.markdown</a></h2>
+<p><para>Github forms body markdown fields</p>
+<p>gh-forms.&lt;file-name&gt;.markdown.&lt;field-id&gt;.required = true;
+gh-forms.&lt;file-name&gt;.markdown.&lt;field-id&gt;.value = "&lt;value&gt;";</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#input">github documentations</a></para></p>
+<h4 id="type-22"><a class="header" href="#type-22">type</a></h4>
+<p>attribute set of (submodule)</p>
+<h4 id="example-22"><a class="header" href="#example-22">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.markdown = {
+    some = {
+      required = true;
+      value = "Some markdown text";
+    };
+  };
+}
+</code></pre>
+<h4 id="default-17"><a class="header" href="#default-17">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.markdown = { };
+}
+</code></pre>
+<h2 id="gh-formnamemarkdownnamevalue"><a class="header" href="#gh-formnamemarkdownnamevalue">gh-form.&lt;name&gt;.markdown.&lt;name&gt;.value</a></h2>
+<p><para>Default value for markdown input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#markdown">github documentations</a></para></p>
+<h4 id="type-23"><a class="header" href="#type-23">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-23"><a class="header" href="#example-23">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.markdown.&lt;name&gt;.value = "11 times in a week";
+}
+</code></pre>
+<h4 id="default-18"><a class="header" href="#default-18">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.markdown.&lt;name&gt;.value = "";
+}
+</code></pre>
+<h2 id="gh-formnamename"><a class="header" href="#gh-formnamename">gh-form.&lt;name&gt;.name</a></h2>
+<p><para>A name for the issue form template</p>
+<p>see <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms#top-level-syntax">github documentations</a></para></p>
+<h4 id="type-24"><a class="header" href="#type-24">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-24"><a class="header" href="#example-24">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.name = "Bug report";
+}
+</code></pre>
+<h4 id="default-19"><a class="header" href="#default-19">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.name = null;
+}
+</code></pre>
+<h2 id="gh-formnametext"><a class="header" href="#gh-formnametext">gh-form.&lt;name&gt;.text</a></h2>
+<p><para>Github forms body text fields</p>
+<p>gh-forms.&lt;file-name&gt;.text.&lt;field-id&gt;.label = "&lt;label&gt;";
+gh-forms.&lt;file-name&gt;.text.&lt;field-id&gt;.description = "&lt;description&gt;";</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#textarea">github documentations</a></para></p>
+<h4 id="type-25"><a class="header" href="#type-25">type</a></h4>
+<p>attribute set of (submodule)</p>
+<h4 id="example-25"><a class="header" href="#example-25">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text = {
+    greeting = {
+      description = "Insert your greeting message";
+      label = "Greeting message";
+    };
+  };
+}
+</code></pre>
+<h4 id="default-20"><a class="header" href="#default-20">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text = { };
+}
+</code></pre>
+<h2 id="gh-formnametextnamedescription"><a class="header" href="#gh-formnametextnamedescription">gh-form.&lt;name&gt;.text.&lt;name&gt;.description</a></h2>
+<p><para>Description of text input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#textarea">github documentations</a></para></p>
+<h4 id="type-26"><a class="header" href="#type-26">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-26"><a class="header" href="#example-26">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text.&lt;name&gt;.description = "Greeting message";
+}
+</code></pre>
+<h4 id="default-21"><a class="header" href="#default-21">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text.&lt;name&gt;.description = null;
+}
+</code></pre>
+<h2 id="gh-formnametextnamelabel"><a class="header" href="#gh-formnametextnamelabel">gh-form.&lt;name&gt;.text.&lt;name&gt;.label</a></h2>
+<p><para>Label of text input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#textarea">github documentations</a></para></p>
+<h4 id="type-27"><a class="header" href="#type-27">type</a></h4>
+<p>non-empty string</p>
+<h4 id="example-27"><a class="header" href="#example-27">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text.&lt;name&gt;.label = "Greeting message";
+}
+</code></pre>
+<h2 id="gh-formnametextnameplaceholder"><a class="header" href="#gh-formnametextnameplaceholder">gh-form.&lt;name&gt;.text.&lt;name&gt;.placeholder</a></h2>
+<p><para>Placeholder for text input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#textarea">github documentations</a></para></p>
+<h4 id="type-28"><a class="header" href="#type-28">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-28"><a class="header" href="#example-28">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text.&lt;name&gt;.placeholder = "Insert your long text here";
+}
+</code></pre>
+<h4 id="default-22"><a class="header" href="#default-22">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text.&lt;name&gt;.placeholder = null;
+}
+</code></pre>
+<h2 id="gh-formnametextnamerender"><a class="header" href="#gh-formnametextnamerender">gh-form.&lt;name&gt;.text.&lt;name&gt;.render</a></h2>
+<p><para>If this should be rendered as code block of specified type</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#textarea">github documentations</a></para></p>
+<h4 id="type-29"><a class="header" href="#type-29">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-29"><a class="header" href="#example-29">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text.&lt;name&gt;.render = "bash";
+}
+</code></pre>
+<h4 id="default-23"><a class="header" href="#default-23">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text.&lt;name&gt;.render = null;
+}
+</code></pre>
+<h2 id="gh-formnametextnamerequired"><a class="header" href="#gh-formnametextnamerequired">gh-form.&lt;name&gt;.text.&lt;name&gt;.required</a></h2>
+<p><para>If this text input is required</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#textarea">github documentations</a></para></p>
+<h4 id="type-30"><a class="header" href="#type-30">type</a></h4>
+<p>boolean</p>
+<h4 id="example-30"><a class="header" href="#example-30">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text.&lt;name&gt;.required = true;
+}
+</code></pre>
+<h4 id="default-24"><a class="header" href="#default-24">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text.&lt;name&gt;.required = false;
+}
+</code></pre>
+<h2 id="gh-formnametextnamevalue"><a class="header" href="#gh-formnametextnamevalue">gh-form.&lt;name&gt;.text.&lt;name&gt;.value</a></h2>
+<p><para>Default value for text input</p>
+<p>See <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema#about-githubs-form-schema#textarea">github documentations</a></para></p>
+<h4 id="type-31"><a class="header" href="#type-31">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-31"><a class="header" href="#example-31">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text.&lt;name&gt;.value = "Happy new year!!";
+}
+</code></pre>
+<h4 id="default-25"><a class="header" href="#default-25">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.text.&lt;name&gt;.value = null;
+}
+</code></pre>
+<h2 id="gh-formnametitle"><a class="header" href="#gh-formnametitle">gh-form.&lt;name&gt;.title</a></h2>
+<p><para>Default title of issue</p>
+<p>see <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms#top-level-syntax">github documentations</a></para></p>
+<h4 id="type-32"><a class="header" href="#type-32">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-32"><a class="header" href="#example-32">example</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.title = "[Bug]: ";
+}
+</code></pre>
+<h4 id="default-26"><a class="header" href="#default-26">default</a></h4>
+<pre><code class="language-nix">{
+  gh-form.&lt;name&gt;.title = null;
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="options.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="options-dependabot.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="options.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="options-dependabot.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

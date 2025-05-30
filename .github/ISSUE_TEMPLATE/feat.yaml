@@ -1,0 +1,34 @@
+body:
+  - attributes:
+      label: Please anwser following questions
+      options:
+        - label: Would you willing to open a PR?
+        - label: Would you be willing to pay me a coffe for it?
+        - label: What about pizzas?
+        - label: Is your spiritual animal offended with previous question?
+        - label: Is your spiritual animal already working on it in your head?
+        - label: Are you wondering why I'm asking these questions?
+        - label: Are you asking yourself if you should give up of opening it?
+        - label: Isn't your eye bleeding yet?
+        - label: Should I add more questions?
+    id: more-info
+    type: checkboxes
+  - attributes:
+      label: Describe your proposed solution
+    id: description
+    type: textarea
+    validations:
+      required: true
+  - attributes:
+      label: What problem this feature solve
+    id: problem
+    type: textarea
+  - attributes:
+      label: How you are overcoming this problem
+    id: some-alt
+    type: textarea
+description: Feature Request
+labels:
+  - feat
+name: feat
+title: 'feat: '

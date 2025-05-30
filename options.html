@@ -1,0 +1,623 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>GH Actions Options</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="about.html"><strong aria-hidden="true">1.</strong> About</a></li><li class="chapter-item expanded "><a href="usage.html"><strong aria-hidden="true">2.</strong> Usage</a></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">3.</strong> Examples</a></li><li class="chapter-item expanded "><a href="options.html" class="active"><strong aria-hidden="true">4.</strong> GH Actions Options</a></li><li class="chapter-item expanded "><a href="options-gh-form.html"><strong aria-hidden="true">5.</strong> GH Forms Options</a></li><li class="chapter-item expanded "><a href="options-dependabot.html"><strong aria-hidden="true">6.</strong> Dependabot Options</a></li><li class="chapter-item expanded "><a href="see-also.html"><strong aria-hidden="true">7.</strong> See also</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="gh-actions"><a class="header" href="#gh-actions">gh-actions</a></h2>
+<p><para>Configure your github actions CI/CD</para></p>
+<h4 id="type"><a class="header" href="#type">type</a></h4>
+<p>attribute set of (submodule)</p>
+<h4 id="default"><a class="header" href="#default">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions = { };
+}
+</code></pre>
+<h2 id="gh-actionsnameenable"><a class="header" href="#gh-actionsnameenable">gh-actions.&lt;name&gt;.enable</a></h2>
+<p><para>Whether to enable Github Actions CI-CD.</para></p>
+<h4 id="type-1"><a class="header" href="#type-1">type</a></h4>
+<p>boolean</p>
+<h4 id="example"><a class="header" href="#example">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.enable = true;
+}
+</code></pre>
+<h4 id="default-1"><a class="header" href="#default-1">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.enable = false;
+}
+</code></pre>
+<h2 id="gh-actionsnamebuild"><a class="header" href="#gh-actionsnamebuild">gh-actions.&lt;name&gt;.build</a></h2>
+<p><para>Command to run as build step</para></p>
+<h4 id="type-2"><a class="header" href="#type-2">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-1"><a class="header" href="#example-1">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.build = "npm run build";
+}
+</code></pre>
+<h4 id="default-2"><a class="header" href="#default-2">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.build = null;
+}
+</code></pre>
+<h2 id="gh-actionsnamecache"><a class="header" href="#gh-actionsnamecache">gh-actions.&lt;name&gt;.cache</a></h2>
+<p><para><a href="https://nix.dev/tutorials/continuous-integration-github-actions#setting-up-github-actions">CACHIX</a> binary cache configuration</para></p>
+<h4 id="type-3"><a class="header" href="#type-3">type</a></h4>
+<p>null or (submodule)</p>
+<h4 id="example-2"><a class="header" href="#example-2">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.cache = {
+    key-name = "CACHIX_SIGNING_KEY";
+    name = "MyCACHIXCacheName";
+  };
+}
+</code></pre>
+<h4 id="default-3"><a class="header" href="#default-3">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.cache = null;
+}
+</code></pre>
+<h2 id="gh-actionsnamecachekey-name"><a class="header" href="#gh-actionsnamecachekey-name">gh-actions.&lt;name&gt;.cache.key-name</a></h2>
+<p><para>Name of GH Secret with <a href="https://nix.dev/tutorials/continuous-integration-github-actions#setting-up-github-actions">CACHIX SIGNING KEY</a></para></p>
+<h4 id="type-4"><a class="header" href="#type-4">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-3"><a class="header" href="#example-3">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.cache.key-name = "CACHIX_SIGNING_KEY";
+}
+</code></pre>
+<h4 id="default-4"><a class="header" href="#default-4">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.cache.key-name = null;
+}
+</code></pre>
+<h2 id="gh-actionsnamecachename"><a class="header" href="#gh-actionsnamecachename">gh-actions.&lt;name&gt;.cache.name</a></h2>
+<p><para>Name of your cache in <a href="https://nix.dev/tutorials/continuous-integration-github-actions#setting-up-github-actions">CACHIX</a></para></p>
+<h4 id="type-5"><a class="header" href="#type-5">type</a></h4>
+<p>non-empty string</p>
+<h4 id="example-4"><a class="header" href="#example-4">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.cache.name = "MyCACHIXCacheName";
+}
+</code></pre>
+<h4 id="default-5"><a class="header" href="#default-5">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.cache.name = null;
+}
+</code></pre>
+<h2 id="gh-actionsnamecachetoken-name"><a class="header" href="#gh-actionsnamecachetoken-name">gh-actions.&lt;name&gt;.cache.token-name</a></h2>
+<p><para>Name of GH Secret with <a href="https://nix.dev/tutorials/continuous-integration-github-actions#setting-up-github-actions">CACHIX AUTH TOKEN</a></para></p>
+<h4 id="type-6"><a class="header" href="#type-6">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-5"><a class="header" href="#example-5">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.cache.token-name = "CACHIX_AUTH_TOKEN";
+}
+</code></pre>
+<h4 id="default-6"><a class="header" href="#default-6">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.cache.token-name = "CACHIX_AUTH_TOKEN";
+}
+</code></pre>
+<h2 id="gh-actionsnamedeploy"><a class="header" href="#gh-actionsnamedeploy">gh-actions.&lt;name&gt;.deploy</a></h2>
+<p><para>Command to run as deploy step</para></p>
+<h4 id="type-7"><a class="header" href="#type-7">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-6"><a class="header" href="#example-6">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.deploy = "aws s3 sync ./build s3://my-bucket";
+}
+</code></pre>
+<h4 id="default-7"><a class="header" href="#default-7">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.deploy = null;
+}
+</code></pre>
+<h2 id="gh-actionsnameenv"><a class="header" href="#gh-actionsnameenv">gh-actions.&lt;name&gt;.env</a></h2>
+<p><para>env vars for steps</para></p>
+<h4 id="type-8"><a class="header" href="#type-8">type</a></h4>
+<p>submodule</p>
+<h4 id="default-8"><a class="header" href="#default-8">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.env = { };
+}
+</code></pre>
+<h2 id="gh-actionsnameenvbuild"><a class="header" href="#gh-actionsnameenvbuild">gh-actions.&lt;name&gt;.env.build</a></h2>
+<p><para>Env variable used by steps</para></p>
+<h4 id="type-9"><a class="header" href="#type-9">type</a></h4>
+<p>attribute set of string</p>
+<h4 id="example-7"><a class="header" href="#example-7">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.env.build = {
+    GIPHY_TOKEN = "\${{ secret.GH_ACTIONS_SSH_KEY }}";
+  };
+}
+</code></pre>
+<h4 id="default-9"><a class="header" href="#default-9">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.env.build = { };
+}
+</code></pre>
+<h2 id="gh-actionsnameenvdeploy"><a class="header" href="#gh-actionsnameenvdeploy">gh-actions.&lt;name&gt;.env.deploy</a></h2>
+<p><para>Env variable used by steps</para></p>
+<h4 id="type-10"><a class="header" href="#type-10">type</a></h4>
+<p>attribute set of string</p>
+<h4 id="example-8"><a class="header" href="#example-8">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.env.deploy = {
+    GIPHY_TOKEN = "\${{ secret.GH_ACTIONS_SSH_KEY }}";
+  };
+}
+</code></pre>
+<h4 id="default-10"><a class="header" href="#default-10">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.env.deploy = { };
+}
+</code></pre>
+<h2 id="gh-actionsnameenvpost-deploy"><a class="header" href="#gh-actionsnameenvpost-deploy">gh-actions.&lt;name&gt;.env.post-deploy</a></h2>
+<p><para>Env variable used by steps</para></p>
+<h4 id="type-11"><a class="header" href="#type-11">type</a></h4>
+<p>attribute set of string</p>
+<h4 id="example-9"><a class="header" href="#example-9">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.env.post-deploy = {
+    GIPHY_TOKEN = "\${{ secret.GH_ACTIONS_SSH_KEY }}";
+  };
+}
+</code></pre>
+<h4 id="default-11"><a class="header" href="#default-11">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.env.post-deploy = { };
+}
+</code></pre>
+<h2 id="gh-actionsnameenvpre-build"><a class="header" href="#gh-actionsnameenvpre-build">gh-actions.&lt;name&gt;.env.pre-build</a></h2>
+<p><para>Env variable used by steps</para></p>
+<h4 id="type-12"><a class="header" href="#type-12">type</a></h4>
+<p>attribute set of string</p>
+<h4 id="example-10"><a class="header" href="#example-10">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.env.pre-build = {
+    GIPHY_TOKEN = "\${{ secret.GH_ACTIONS_SSH_KEY }}";
+  };
+}
+</code></pre>
+<h4 id="default-12"><a class="header" href="#default-12">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.env.pre-build = { };
+}
+</code></pre>
+<h2 id="gh-actionsnameenvtest"><a class="header" href="#gh-actionsnameenvtest">gh-actions.&lt;name&gt;.env.test</a></h2>
+<p><para>Env variable used by steps</para></p>
+<h4 id="type-13"><a class="header" href="#type-13">type</a></h4>
+<p>attribute set of string</p>
+<h4 id="example-11"><a class="header" href="#example-11">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.env.test = {
+    GIPHY_TOKEN = "\${{ secret.GH_ACTIONS_SSH_KEY }}";
+  };
+}
+</code></pre>
+<h4 id="default-13"><a class="header" href="#default-13">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.env.test = { };
+}
+</code></pre>
+<h2 id="gh-actionsnamegha-cache"><a class="header" href="#gh-actionsnamegha-cache">gh-actions.&lt;name&gt;.gha-cache</a></h2>
+<p><para><a href="https://github.com/actions/cache">GH Action Cache</a> configuration
+By default it caches only ~/.cache/nix</para></p>
+<h4 id="type-14"><a class="header" href="#type-14">type</a></h4>
+<p>null or (submodule)</p>
+<h4 id="example-12"><a class="header" href="#example-12">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.gha-cache = {
+    name = "My cache";
+  };
+}
+</code></pre>
+<h4 id="default-14"><a class="header" href="#default-14">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.gha-cache = null;
+}
+</code></pre>
+<h2 id="gh-actionsnamegha-cacheid"><a class="header" href="#gh-actionsnamegha-cacheid">gh-actions.&lt;name&gt;.gha-cache.id</a></h2>
+<p><para>Id to be used in action</para></p>
+<h4 id="type-15"><a class="header" href="#type-15">type</a></h4>
+<p>non-empty string</p>
+<h4 id="example-13"><a class="header" href="#example-13">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.gha-cache.id = "my-cache";
+}
+</code></pre>
+<h4 id="default-15"><a class="header" href="#default-15">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.gha-cache.id = "cache";
+}
+</code></pre>
+<h2 id="gh-actionsnamegha-cachekey"><a class="header" href="#gh-actionsnamegha-cachekey">gh-actions.&lt;name&gt;.gha-cache.key</a></h2>
+<p><para>Key to used in this cache</para></p>
+<h4 id="type-16"><a class="header" href="#type-16">type</a></h4>
+<p>non-empty string</p>
+<h4 id="example-14"><a class="header" href="#example-14">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.gha-cache.key = "nix-\${{ runner.os }}-\${{ hashFiles('flake.lock') }}";
+}
+</code></pre>
+<h4 id="default-16"><a class="header" href="#default-16">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.gha-cache.key = "nix-\${{ runner.os }}-\${{ hashFiles('flake.lock') }}";
+}
+</code></pre>
+<h2 id="gh-actionsnamegha-cachename"><a class="header" href="#gh-actionsnamegha-cachename">gh-actions.&lt;name&gt;.gha-cache.name</a></h2>
+<p><para>Name to be used in this action</para></p>
+<h4 id="type-17"><a class="header" href="#type-17">type</a></h4>
+<p>non-empty string</p>
+<h4 id="example-15"><a class="header" href="#example-15">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.gha-cache.name = "My Cache";
+}
+</code></pre>
+<h4 id="default-17"><a class="header" href="#default-17">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.gha-cache.name = "Cache";
+}
+</code></pre>
+<h2 id="gh-actionsnamegha-cachepaths"><a class="header" href="#gh-actionsnamegha-cachepaths">gh-actions.&lt;name&gt;.gha-cache.paths</a></h2>
+<p><para>Other paths to cache</para></p>
+<h4 id="type-18"><a class="header" href="#type-18">type</a></h4>
+<p>list of non-empty string</p>
+<h4 id="example-16"><a class="header" href="#example-16">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.gha-cache.paths = [
+    "~/.cache/nim"
+  ];
+}
+</code></pre>
+<h4 id="default-18"><a class="header" href="#default-18">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.gha-cache.paths = [
+    "~/.cache/nix"
+  ];
+}
+</code></pre>
+<h2 id="gh-actionsnamegha-cacheuses"><a class="header" href="#gh-actionsnamegha-cacheuses">gh-actions.&lt;name&gt;.gha-cache.uses</a></h2>
+<p><para>Cache version, default is actions/cache@4</para></p>
+<h4 id="type-19"><a class="header" href="#type-19">type</a></h4>
+<p>non-empty string</p>
+<h4 id="example-17"><a class="header" href="#example-17">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.gha-cache.uses = "actions/cache@v4";
+}
+</code></pre>
+<h4 id="default-19"><a class="header" href="#default-19">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.gha-cache.uses = "actions/cache@v4";
+}
+</code></pre>
+<h2 id="gh-actionsnameon"><a class="header" href="#gh-actionsnameon">gh-actions.&lt;name&gt;.on</a></h2>
+<p><para>When this build should be triggered</para></p>
+<h4 id="type-20"><a class="header" href="#type-20">type</a></h4>
+<p>attribute set of anything</p>
+<h4 id="example-18"><a class="header" href="#example-18">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.on = {
+    push = {
+      branches = [
+        "master"
+      ];
+    };
+  };
+}
+</code></pre>
+<h4 id="default-20"><a class="header" href="#default-20">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.on = {
+    push = {
+      branches = [
+        "master"
+      ];
+    };
+  };
+}
+</code></pre>
+<h2 id="gh-actionsnamepost-deploy"><a class="header" href="#gh-actionsnamepost-deploy">gh-actions.&lt;name&gt;.post-deploy</a></h2>
+<p><para>Command that run after deploy</para></p>
+<h4 id="type-21"><a class="header" href="#type-21">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-19"><a class="header" href="#example-19">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.post-deploy = "echo Im done";
+}
+</code></pre>
+<h4 id="default-21"><a class="header" href="#default-21">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.post-deploy = null;
+}
+</code></pre>
+<h2 id="gh-actionsnamepre-build"><a class="header" href="#gh-actionsnamepre-build">gh-actions.&lt;name&gt;.pre-build</a></h2>
+<p><para>Command to run before build</para></p>
+<h4 id="type-22"><a class="header" href="#type-22">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-20"><a class="header" href="#example-20">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.pre-build = "npm i";
+}
+</code></pre>
+<h4 id="default-22"><a class="header" href="#default-22">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.pre-build = null;
+}
+</code></pre>
+<h2 id="gh-actionsnamessh"><a class="header" href="#gh-actionsnamessh">gh-actions.&lt;name&gt;.ssh</a></h2>
+<p><para>https://github.com/marketplace/actions/install-ssh-key
+Config for ssh installation
+There are two reasons to set it</p>
+<ol>
+<li>our deploy runs in ssh</li>
+<li>we have some private git repository</li>
+</ol>
+<p>In this last case we should add your public key to some user with repository access (in github) or to our private server.</para></p>
+<h4 id="type-23"><a class="header" href="#type-23">type</a></h4>
+<p>null or (attribute set of string)</p>
+<h4 id="example-21"><a class="header" href="#example-21">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.ssh = {
+    key = "\${{ secret.GH_ACTIONS_SSH_KEY }}";
+  };
+}
+</code></pre>
+<h4 id="default-23"><a class="header" href="#default-23">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.ssh = null;
+}
+</code></pre>
+<h2 id="gh-actionsnamessh-secret-name"><a class="header" href="#gh-actionsnamessh-secret-name">gh-actions.&lt;name&gt;.ssh-secret-name</a></h2>
+<p><para>Name of GH Secret with PRIVATE SSH KEY
+for more advanced usage try ssh option</para></p>
+<h4 id="type-24"><a class="header" href="#type-24">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-22"><a class="header" href="#example-22">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.ssh-secret-name = "GH_ACTIONS_SSH_KEY";
+}
+</code></pre>
+<h4 id="default-24"><a class="header" href="#default-24">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.ssh-secret-name = null;
+}
+</code></pre>
+<h2 id="gh-actionsnametest"><a class="header" href="#gh-actionsnametest">gh-actions.&lt;name&gt;.test</a></h2>
+<p><para>Command to run as test step</para></p>
+<h4 id="type-25"><a class="header" href="#type-25">type</a></h4>
+<p>null or non-empty string</p>
+<h4 id="example-23"><a class="header" href="#example-23">example</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.test = "npm test";
+}
+</code></pre>
+<h4 id="default-25"><a class="header" href="#default-25">default</a></h4>
+<pre><code class="language-nix">{
+  gh-actions.&lt;name&gt;.test = null;
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="examples.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="options-gh-form.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="examples.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="options-gh-form.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
