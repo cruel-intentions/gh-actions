@@ -1,9 +1,3 @@
-let
-  author    = "cruel-intentions";
-  edit-path = "${org-url}/${project}/edit/master/guide/{path}";
-  org-url   = "https://github.com/${author}";
-  project   = "devshell-files";
-in
 {
   imports = [
     ./dependabot.nix

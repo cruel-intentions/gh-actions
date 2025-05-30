@@ -29,4 +29,6 @@
 
     git push --tag
   '';
+  # Configure github cache
+  gh-actions.tag-me.gha-cache.name = "Cache";
 }

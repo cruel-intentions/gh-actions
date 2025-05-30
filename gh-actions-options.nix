@@ -1,6 +1,60 @@
 { lib, ...}:
 let
   cachixdoc = "https://nix.dev/tutorials/continuous-integration-github-actions#setting-up-github-actions";
+  ghacachedoc = "https://github.com/actions/cache";
+  detnix = lib.types.submodule {
+    options = {
+      extra-conf             = lib.mkOption {};
+      force-no-systemd       = lib.mkOption {};
+      github-server-url      = lib.mkOption {};
+      github-token           = lib.mkOption {};
+      init                   = lib.mkOption {};
+      kvm                    = lib.mkOption {};
+    };
+  };
+  gha-cache = lib.types.submodule {
+    options.id     = lib.mkOption {
+      type        = lib.types.nonEmptyStr;
+      default     = "cache";
+      example     = "my-cache";
+      description = ''
+        Id to be used in action
+      '';
+    };
+    options.name   = lib.mkOption {
+      type        = lib.types.nonEmptyStr;
+      default     = "Cache";
+      example     = "My Cache";
+      description = ''
+        Name to be used in this action
+      '';
+    };
+    options.key    = lib.mkOption {
+      type        = lib.types.nonEmptyStr;
+      default     = "nix-\${{ runner.os }}-\${{ hashFiles('flake.lock') }}";
+      example     = "nix-\${{ runner.os }}-\${{ hashFiles('flake.lock') }}";
+      description = ''
+        Key to used in this cache
+      '';
+    };
+    options.paths  = lib.mkOption {
+      type        = lib.types.listOf lib.types.nonEmptyStr;
+      default     = ["~/.cache/nix"];
+      example     = ["~/.cache/nim"];
+      description = ''
+        Other paths to cache
+      '';
+    };
+    options.uses   = lib.mkOption {
+      type        = lib.types.nonEmptyStr;
+      default     = "actions/cache@v4";
+      example     = "actions/cache@v4";
+      description = ''
+        Cache version, default is actions/cache@4
+      '';
+    };
+  };
+
   cache = lib.types.submodule {
     options.name = lib.mkOption {
       type        = lib.types.nonEmptyStr;
@@ -29,6 +83,15 @@ let
   };
   workflow = lib.types.submodule {
     options.enable = lib.mkEnableOption "Github Actions CI-CD";
+    options.gha-cache  = lib.mkOption {
+      type        = lib.types.nullOr gha-cache;
+      default     = null;
+      description = ''
+        [GH Action Cache](${ghacachedoc}) configuration
+        By default it caches only ~/.cache/nix
+      '';
+      example.name = "My cache";
+    };
     options.cache  = lib.mkOption {
       type        = lib.types.nullOr cache;
       default     = null;

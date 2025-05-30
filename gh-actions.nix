@@ -55,6 +55,13 @@ let
         "\${{ secrets.${cfg.cache.key-name} }}";
       "with".authToken  = lib.mkIf (cfg.cache.key-name == null) 
         "\${{ secrets.${cfg.cache.token-name} }}";
+      };
+    gha-cache = arrOfIf (cfg.gha-cache != null) {
+      id   = cfg.gha-cache.id;
+      name = cfg.gha-cache.name;
+      uses = cfg.gha-cache.uses;
+      "with".path = cfg.gha-cache.paths;
+      "with".key  = cfg.gha-cache.key;
     };
     install-nix = [{ 
       uses = "cachix/install-nix-action@v31";
@@ -69,6 +76,7 @@ let
         runs-on = "ubuntu-latest";
         steps = needs-ssh-key
           ++ checkout
+          ++ gha-cache
           ++ install-nix
           ++ install-cachix
           ++ pre-build

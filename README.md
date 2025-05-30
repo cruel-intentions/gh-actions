@@ -75,6 +75,8 @@ The most basic example is used by this project to tag it
 
     git push --tag
   '';
+  # Configure github cache
+  gh-actions.tag-me.gha-cache.name = "Cache";
 }
 
 ```
@@ -93,6 +95,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - id: cache
+        name: Cache
+        uses: actions/cache@v4
+        with:
+          key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          path:
+            - ~/.cache/nix
       - uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
