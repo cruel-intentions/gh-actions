@@ -60,7 +60,7 @@ let
       id   = cfg.gha-cache.id;
       name = cfg.gha-cache.name;
       uses = cfg.gha-cache.uses;
-      "with".path = cfg.gha-cache.paths;
+      "with".path = builtins.concatStringsSep "\n" cfg.gha-cache.paths;
       "with".key  = cfg.gha-cache.key;
     };
     install-nix = [{ 
